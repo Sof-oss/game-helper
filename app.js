@@ -62,7 +62,6 @@ function calc(){
 }
 function render(){
  $("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");
- $("setSelected").innerHTML=chips(SETS,state.sets,"set");$("itemSelected").innerHTML=chips(ITEMS,state.items,"item");
 $("setSummary").innerHTML=summary(SETS,state.sets);$("itemSummary").innerHTML=itemSummary();calc();
 }
 document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items;const n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);render()});
