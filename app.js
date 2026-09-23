@@ -63,6 +63,16 @@ function renderTalents(){const branches=[{code:"free_hits",name:"Боевая п
 function openTalents(){$("talentModal").classList.add("show");$("talentModal").setAttribute("aria-hidden","false");renderTalents();resetTreeTransform()}
 function closeTalents(){$("talentModal").classList.remove("show");$("talentModal").setAttribute("aria-hidden","true");talentDetailOpen=false}
 function resetTalents(){if(!spentTalentPoints())return;if(!confirm("Сбросить все очки талантов? Уровень и снаряжение останутся без изменений."))return;state.talents={};selectedTalentCode=null;talentDetailOpen=false;saveState();render();openTalents()}
+
+/* Бонусы снаряжения (справка по всем комплектам и вещам, вне зависимости от выбора) */
+const GEAR_BONUS_LABELS={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс",critChance:"Шанс крита (общий)",critDamage:"Урон крита (общий)",critGaussChance:"Шанс крита (гаусс)",critGrenadeChance:"Шанс крита (граната)",critGaussDamage:"Урон крита (гаусс)",critGrenadeDamage:"Урон крита (граната)",freeNoCooldown:"Шанс удара без отката",cooldown:"Сокращение отката"};
+const GEAR_BONUS_PCT=new Set(["critChance","critGaussChance","critGrenadeChance","freeNoCooldown","cooldown"]);
+function gearBonusTags(x){const tags=[];keys.forEach(k=>{const v=x.bonuses&&x.bonuses[k];if(v)tags.push({label:GEAR_BONUS_LABELS[k],value:"+"+fmt(v)})});["critChance","critDamage","critGaussChance","critGrenadeChance","critGaussDamage","critGrenadeDamage","freeNoCooldown","cooldown"].forEach(k=>{const v=x[k];if(v)tags.push({label:GEAR_BONUS_LABELS[k],value:"+"+(GEAR_BONUS_PCT.has(k)?Math.round(v*100)+"%":fmt(v))})});return tags}
+function gearInfoCard(x){const tags=gearBonusTags(x);return '<div class="gear-info-card"><b>'+x.name+'</b><div class="gear-info-tags">'+(tags.length?tags.map(t=>'<span class="gear-info-tag">'+t.label+' <b>'+t.value+'</b></span>').join(""):'<span class="gear-info-tag">Нет бонусов</span>')+'</div></div>'}
+function renderGearInfo(){$("gearInfoBody").innerHTML='<div class="gear-info-group-title">Комплекты</div>'+SETS.map(gearInfoCard).join("")+'<div class="gear-info-group-title">Одиночные вещи</div>'+ITEMS.map(gearInfoCard).join("")}
+function openGearInfo(){$("gearInfoModal").classList.add("show");$("gearInfoModal").setAttribute("aria-hidden","false");renderGearInfo()}
+function closeGearInfo(){$("gearInfoModal").classList.remove("show");$("gearInfoModal").setAttribute("aria-hidden","true")}
+
 function totals(){
  const total=Object.fromEntries(keys.map(k=>[k,0]));let critChance=0,critDamage=0,critGaussChance=0,critGrenadeChance=0,critGaussDamage=0,critGrenadeDamage=0,noCooldown=0,cooldown=0;
  const addBonuses=x=>{keys.forEach(k=>total[k]+=x.bonuses[k]||0);critChance+=x.critChance||0;critDamage+=x.critDamage||0;critGaussChance+=x.critGaussChance||0;critGrenadeChance+=x.critGrenadeChance||0;critGaussDamage+=x.critGaussDamage||0;critGrenadeDamage+=x.critGrenadeDamage||0;noCooldown+=x.freeNoCooldown||0;cooldown+=x.cooldown||0};
@@ -93,9 +103,11 @@ document.addEventListener("click",e=>{
  if(e.target.closest("#openTalents")){openTalents();return}
  if(e.target.closest("[data-reset-talents]")){resetTalents();return}
  if(e.target.closest("[data-close-talents]")){closeTalents();return}
+ if(e.target.closest("#openGearInfo")){openGearInfo();return}
+ if(e.target.closest("[data-close-gear-info]")){closeGearInfo();return}
  const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));saveState();render()}
 });
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(talentDetailOpen){talentDetailOpen=false;renderTalents()}else closeTalents()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(talentDetailOpen){talentDetailOpen=false;renderTalents()}else if($("gearInfoModal").classList.contains("show")){closeGearInfo()}else closeTalents()}});
 document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items,n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);saveState();render()});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-step]");if(!b)return;const input=$(b.dataset.step),dir=Number(b.dataset.dir)||0,min=Number(input.min)||0,max=Number(input.max)||999;input.value=Math.min(max,Math.max(min,(Number(input.value)||0)+dir));saveState();calc()});
 $("selectAllEquipment").addEventListener("change",e=>{state.sets.clear();state.items.clear();if(e.target.checked){SETS.forEach((_,i)=>state.sets.add(i));ITEMS.forEach((_,i)=>state.items.add(i))}saveState();render()});

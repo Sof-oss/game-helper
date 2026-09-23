@@ -18,7 +18,7 @@
 <aside class="sidebar">
 <section class="side-section level-section"><div class="side-title"><span class="person-icon" aria-hidden="true"></span><b>Уровень персонажа</b></div><div class="level-row"><button type="button" data-step="level" data-dir="-1">−</button><input id="level" type="number" min="1" max="100" value="1"><button type="button" data-step="level" data-dir="1">+</button></div></section>
 <section class="side-section talent-launcher"><div class="side-title"><span>★</span><b>Таланты</b></div><button type="button" id="openTalents" class="talent-open"><span>✦</span><span>Открыть древо талантов</span><b id="talentPointsBadge">0 / 135</b></button><div class="talent-summary" id="talentSummary">Очки не распределены</div></section>
-<section class="side-section equipment-section"><div class="side-title"><span class="clothes-icon" aria-hidden="true">🧥</span><b>Комплекты</b></div><div id="sets" class="options"></div><div class="items-divider"><span>•</span><b>Одиночные вещи</b></div><div id="items" class="options"></div></section>
+<section class="side-section equipment-section"><div class="side-title"><span class="clothes-icon" aria-hidden="true">🧥</span><b>Комплекты</b><button type="button" id="openGearInfo" class="gear-info-btn" aria-label="Бонусы снаряжения" title="Бонусы снаряжения">ℹ</button></div><div id="sets" class="options"></div><div class="items-divider"><span>•</span><b>Одиночные вещи</b></div><div id="items" class="options"></div></section>
 <label class="select-all"><input id="selectAllEquipment" type="checkbox"> <span>Выбрать всё снаряжение</span></label><button class="reset-all" id="resetAll">↻ &nbsp; Сбросить</button>
 </aside>
 <main class="content">
@@ -41,6 +41,18 @@
         <div class="talent-game-actions"><span class="talent-points"><b id="modalSpentPoints">0</b> / <b id="modalMaxPoints">135</b></span><button type="button" class="talent-icon-button" data-close-talents aria-label="Закрыть">×</button></div>
       </header>
       <div class="talent-game-body"><aside class="talent-game-sidebar" id="talentSidebar"></aside><main class="talent-flow-wrap"><div class="talent-flow" id="talentFlow"></div></main><div class="talent-detail-overlay" id="talentDetailOverlay"></div></div>
+    </div>
+  </section>
+</div>
+<div id="gearInfoModal" class="talent-modal gear-info-modal" aria-hidden="true">
+  <div class="talent-backdrop" data-close-gear-info></div>
+  <section class="talent-dialog gear-info-dialog" role="dialog" aria-modal="true" aria-labelledby="gearInfoModalTitle">
+    <div class="talent-game-window gear-info-window">
+      <header class="talent-game-header">
+        <div><h2 id="gearInfoModalTitle">Бонусы снаряжения</h2><p>Полный список бонусов всех комплектов и одиночных вещей.</p></div>
+        <div class="talent-game-actions"><button type="button" class="talent-icon-button" data-close-gear-info aria-label="Закрыть">×</button></div>
+      </header>
+      <div class="gear-info-body" id="gearInfoBody"></div>
     </div>
   </section>
 </div>
