@@ -21,7 +21,23 @@ const state={sets:new Set(),items:new Set()};
 const keys=["knife","pistol","auto","grenade","gl","gauss"];
 const names={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс"};
 const bonusText={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс"};
-const $=id=>document.getElementById(id);
+const $=id=>document.getElementById(id);\nconst STORAGE_KEY="gameHelperState";
+function saveState(){
+ const data={sets:[...state.sets],items:[...state.items],level:$("level").value,talents:{}};
+ ["talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>data.talents[id]=$(id).value);
+ localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+}
+function loadState(){
+ try{
+  const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
+  if(!data)return;
+  state.sets=new Set(Array.isArray(data.sets)?data.sets.filter(i=>Number.isInteger(i)&&i>=0&&i<SETS.length):[]);
+  state.items=new Set(Array.isArray(data.items)?data.items.filter(i=>Number.isInteger(i)&&i>=0&&i<ITEMS.length):[]);
+  if(data.level!==undefined) $("level").value=data.level;
+  if(data.talents) Object.entries(data.talents).forEach(([id,value])=>{if($(id)&&value!==undefined)$(id).value=value});
+ }catch{}
+}
+
 const num=id=>Math.max(0,Number($(id).value)||0);
 function fmt(n){return Math.round(n).toLocaleString("ru-RU")}
 function totals(){
@@ -79,8 +95,8 @@ function render(){
 }
 function showToast(){const t=$("toast");t.classList.add("show");clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
 document.addEventListener("click",e=>{const guide=e.target.closest(".guide-link");if(guide){e.preventDefault();showToast();return}});
-document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items;const n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);render()});
-document.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));render()}});
+document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items;const n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);saveState();render()});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));saveState();render()}});
 document.addEventListener("click",e=>{
  const b=e.target.closest("[data-step]");
  if(!b)return;
@@ -94,6 +110,6 @@ $("selectAllEquipment").addEventListener("change",e=>{
  if(e.target.checked){SETS.forEach((_,i)=>state.sets.add(i));ITEMS.forEach((_,i)=>state.items.add(i))}
  render();
 });
-["level","talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).addEventListener("input",calc));
+["level","talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).addEventListener("input",()=>{saveState();calc()}));
 $("resetAll").onclick=()=>{state.sets.clear();state.items.clear();$("level").value=1;["talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).value=0);render()};
 render();
