@@ -106,3 +106,12 @@
   .talent-game-sidebar{width:100%;max-width:none;min-width:0;height:auto;max-height:48%;}
   .talent-flow-wrap{height:52%;min-height:0;}
 }
+
+
+/* Original talent assets */
+.talent-game-body{background-image:url("assets/talents-CjzNNTY-.webp");background-repeat:no-repeat;background-size:cover;background-position:center center;}
+.talent-flow-wrap{background:transparent;}
+.talent-node-art{background:#111;overflow:hidden;}
+.talent-node-art img{display:block;width:100%;height:100%;object-fit:cover;}
+.talent-detail-art{overflow:hidden;background:#111;}
+.talent-detail-art img{display:block;width:100%;height:100%;object-fit:cover;}
