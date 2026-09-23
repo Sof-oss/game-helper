@@ -3,143 +3,141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Игровой помощник: калькулятор урона, экипировки и бесплатных ударов.">
+  <meta name="description" content="Калькулятор урона для игроков MMO.">
   <title>Game Helper — калькулятор урона</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <div>
-        <div class="eyebrow">GAME HELPER</div>
-        <h1>Калькулятор урона</h1>
-        <p>Помощник для игроков MMO по мотивам вселенной S.T.A.L.K.E.R.</p>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">GH</span>
+        <div>
+          <strong>GAME HELPER</strong>
+          <span>КАЛЬКУЛЯТОР УРОНА</span>
+        </div>
       </div>
-      <a class="github-link" href="https://github.com/Sof-oss/game-helper" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <div class="level-control">
+        <label for="level">УРОВЕНЬ</label>
+        <input id="level" type="number" min="0" max="999" step="1" value="23" inputmode="numeric">
+      </div>
     </div>
   </header>
 
   <main class="container">
-    <section class="hero-card">
+    <section class="intro">
       <div>
-        <span class="badge">КАЛЬКУЛЯТОР</span>
-        <h2>Собери свою экипировку</h2>
-        <p>Укажи уровень, выбери доступные комплекты и одиночные вещи — значения пересчитаются автоматически.</p>
+        <span class="kicker">ЗОНА / DAMAGE CALCULATOR</span>
+        <h1>Расчёт урона</h1>
       </div>
-      <div class="hero-note">
-        <strong>Поддерживается</strong>
-        <span>граната · гранатомёт · Гаусс · нож · пистолет · автомат</span>
-      </div>
+      <p>Выбери экипировку и укажи бонусы талантов.</p>
     </section>
 
-    <div class="layout">
-      <section class="panel">
-        <div class="panel-title">
-          <div>
-            <span class="section-number">01</span>
-            <h2>Персонаж</h2>
+    <div class="dashboard">
+      <aside class="controls">
+        <section class="panel">
+          <div class="panel-heading">
+            <span class="index">01</span>
+            <h2>Таланты</h2>
           </div>
-        </div>
-        <label class="field">
-          <span>Уровень персонажа</span>
-          <input id="level" type="number" min="0" max="999" step="1" value="23" inputmode="numeric">
-        </label>
-
-        <div class="talents">
-          <div class="subheading">Прибавка от талантов</div>
-          <p class="muted">По данным исходной таблицы. При необходимости значения можно изменить.</p>
           <div class="talent-grid">
             <label class="field"><span>Граната</span><input id="talentGrenade" type="number" step="1" value="30"></label>
             <label class="field"><span>Гранатомёт</span><input id="talentGl" type="number" step="1" value="60"></label>
             <label class="field"><span>Гаусс</span><input id="talentGauss" type="number" step="1" value="150"></label>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="panel">
-        <div class="panel-title">
-          <div>
-            <span class="section-number">02</span>
+        <section class="panel">
+          <div class="panel-heading">
+            <span class="index">02</span>
             <h2>Комплекты</h2>
+            <button id="clearSets" class="reset" type="button">СБРОСИТЬ</button>
           </div>
-          <button id="clearSets" class="ghost-button" type="button">Сбросить</button>
-        </div>
-        <p class="muted">Можно выбрать несколько комплектов. Бонусы выбранных комплектов суммируются.</p>
-        <div id="sets" class="choice-grid"></div>
-      </section>
+          <div id="sets" class="choice-grid"></div>
+        </section>
 
-      <section class="panel">
-        <div class="panel-title">
-          <div>
-            <span class="section-number">03</span>
+        <section class="panel">
+          <div class="panel-heading">
+            <span class="index">03</span>
             <h2>Одиночные вещи</h2>
+            <button id="clearItems" class="reset" type="button">СБРОСИТЬ</button>
           </div>
-          <button id="clearItems" class="ghost-button" type="button">Сбросить</button>
-        </div>
-        <p class="muted">Выберите все отдельные предметы, которые есть у персонажа.</p>
-        <div id="items" class="choice-grid"></div>
-      </section>
+          <div id="items" class="choice-grid"></div>
+        </section>
+      </aside>
 
-      <section class="panel results-panel">
-        <div class="panel-title">
+      <section class="results">
+        <div class="result-header">
           <div>
-            <span class="section-number">04</span>
-            <h2>Результат</h2>
+            <span class="kicker">РЕЗУЛЬТАТ</span>
+            <h2>Урон</h2>
           </div>
+          <span class="status-dot">LIVE</span>
         </div>
 
-        <div class="result-group">
-          <h3>Оружие за жетоны</h3>
+        <div class="weapon-section">
+          <div class="section-label"><span>Жетоны</span><i></i></div>
           <div class="result-grid">
-            <article class="result-card"><span>Граната</span><strong id="resultGrenade">0</strong><small>урона</small></article>
-            <article class="result-card"><span>Гранатомёт</span><strong id="resultGl">0</strong><small>урона</small></article>
-            <article class="result-card"><span>Гаусс</span><strong id="resultGauss">0</strong><small>урона</small></article>
+            <article class="damage-card">
+              <span>ГРАНАТА</span>
+              <strong id="resultGrenade">0</strong>
+              <small>УРОНА</small>
+            </article>
+            <article class="damage-card">
+              <span>ГРАНАТОМЁТ</span>
+              <strong id="resultGl">0</strong>
+              <small>УРОНА</small>
+            </article>
+            <article class="damage-card featured">
+              <span>ГАУСС</span>
+              <strong id="resultGauss">0</strong>
+              <small>УРОНА</small>
+            </article>
           </div>
         </div>
 
-        <div class="result-group">
-          <h3>Бесплатные удары</h3>
+        <div class="weapon-section">
+          <div class="section-label"><span>Бесплатные удары</span><i></i></div>
           <div class="result-grid">
-            <article class="result-card"><span>Нож</span><strong id="resultKnife">0</strong><small>урона</small></article>
-            <article class="result-card"><span>Пистолет</span><strong id="resultPistol">0</strong><small>урона</small></article>
-            <article class="result-card"><span>Автомат</span><strong id="resultAuto">0</strong><small>урона</small></article>
+            <article class="damage-card">
+              <span>НОЖ</span>
+              <strong id="resultKnife">0</strong>
+              <small>УРОНА</small>
+            </article>
+            <article class="damage-card">
+              <span>ПИСТОЛЕТ</span>
+              <strong id="resultPistol">0</strong>
+              <small>УРОНА</small>
+            </article>
+            <article class="damage-card">
+              <span>АВТОМАТ</span>
+              <strong id="resultAuto">0</strong>
+              <small>УРОНА</small>
+            </article>
           </div>
         </div>
 
-        <div class="bonus-summary">
-          <div><span>Бонус урона гранаты</span><strong id="bonusGrenade">+0</strong></div>
-          <div><span>Бонус урона гранатомёта</span><strong id="bonusGl">+0</strong></div>
-          <div><span>Бонус урона Гаусса</span><strong id="bonusGauss">+0</strong></div>
+        <div class="stats">
+          <div><span>Бонус гранаты</span><strong id="bonusGrenade">+0</strong></div>
+          <div><span>Бонус гранатомёта</span><strong id="bonusGl">+0</strong></div>
+          <div><span>Бонус Гаусса</span><strong id="bonusGauss">+0</strong></div>
           <div><span>Бонус ножа</span><strong id="bonusKnife">+0</strong></div>
           <div><span>Бонус пистолета</span><strong id="bonusPistol">+0</strong></div>
           <div><span>Бонус автомата</span><strong id="bonusAuto">+0</strong></div>
         </div>
 
         <div class="extra-stats">
-          <div><span>Шанс крита Гаусса</span><strong id="critGaussChance">0%</strong></div>
-          <div><span>Шанс крита</span><strong id="critChance">0%</strong></div>
-          <div><span>Шанс удара без отката</span><strong id="noCooldown">0%</strong></div>
+          <div><span>Крит Гаусса</span><strong id="critGaussChance">0%</strong></div>
+          <div><span>Крит</span><strong id="critChance">0%</strong></div>
+          <div><span>Без отката</span><strong id="noCooldown">0%</strong></div>
           <div><span>Сокращение отката</span><strong id="cooldown">0%</strong></div>
         </div>
       </section>
     </div>
-
-    <section class="formula-panel">
-      <h2>Формулы</h2>
-      <div class="formula-grid">
-        <code>Граната = round(55 × 1.02^уровень) + шмот + таланты</code>
-        <code>Гранатомёт = round(113 × 1.02^уровень) + шмот + таланты</code>
-        <code>Гаусс = round(360 × 1.02^уровень) + шмот + таланты</code>
-        <code>Нож = floor(45.85 + 1.15 × уровень) + шмот</code>
-        <code>Пистолет = floor(47.8 + 1.2 × уровень) + шмот</code>
-        <code>Автомат = floor(53.65 + 1.35 × уровень) + шмот</code>
-      </div>
-      <p class="source-note">Формула Гаусса обновлена: базовое значение — 360.</p>
-    </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">Game Helper · данные калькулятора можно расширять в <code>app.js</code></div>
+    <div class="container">GAME HELPER <span>·</span> ЗОНА</div>
   </footer>
 
   <script src="app.js"></script>
