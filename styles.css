@@ -184,3 +184,9 @@ html,body{overflow-x:hidden}
 .gear-info-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;background:#0d1d2a;border:1px solid #234157;color:#a9bed0;font-size:11px;white-space:nowrap}
 .gear-info-tag b{display:inline;margin:0;color:#54bfff;font-weight:700}
 @media(max-width:650px){.gear-info-window{width:94vw}.gear-info-body{padding:14px}}
+
+/* Итоговая сумма бонусов внизу окна снаряжения */
+.gear-info-total-wrap{position:sticky;bottom:0;margin:6px -20px -20px;padding:10px 20px 16px;background:linear-gradient(180deg,rgba(7,9,8,0),#070908 28%);z-index:1}
+.gear-info-total{border-color:#2e6384;background:linear-gradient(135deg,#0d2231,#0a1a27);box-shadow:0 0 14px rgba(84,191,255,.12)}
+.gear-info-total>b{color:#73c8ff}
+@media(max-width:650px){.gear-info-total-wrap{margin:6px -14px -14px;padding:10px 14px 14px}}

@@ -68,8 +68,18 @@ function resetTalents(){if(!spentTalentPoints())return;if(!confirm("Сброси
 const GEAR_BONUS_LABELS={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс",critChance:"Шанс крита (общий)",critDamage:"Урон крита (общий)",critGaussChance:"Шанс крита (гаусс)",critGrenadeChance:"Шанс крита (граната)",critGaussDamage:"Урон крита (гаусс)",critGrenadeDamage:"Урон крита (граната)",freeNoCooldown:"Шанс удара без отката",cooldown:"Сокращение отката"};
 const GEAR_BONUS_PCT=new Set(["critChance","critGaussChance","critGrenadeChance","freeNoCooldown","cooldown"]);
 function gearBonusTags(x){const tags=[];keys.forEach(k=>{const v=x.bonuses&&x.bonuses[k];if(v)tags.push({label:GEAR_BONUS_LABELS[k],value:"+"+fmt(v)})});["critChance","critDamage","critGaussChance","critGrenadeChance","critGaussDamage","critGrenadeDamage","freeNoCooldown","cooldown"].forEach(k=>{const v=x[k];if(v)tags.push({label:GEAR_BONUS_LABELS[k],value:"+"+(GEAR_BONUS_PCT.has(k)?Math.round(v*100)+"%":fmt(v))})});return tags}
-function gearInfoCard(x){const tags=gearBonusTags(x);return '<div class="gear-info-card"><b>'+x.name+'</b><div class="gear-info-tags">'+(tags.length?tags.map(t=>'<span class="gear-info-tag">'+t.label+' <b>'+t.value+'</b></span>').join(""):'<span class="gear-info-tag">Нет бонусов</span>')+'</div></div>'}
-function renderGearInfo(){$("gearInfoBody").innerHTML='<div class="gear-info-group-title">Комплекты</div>'+SETS.map(gearInfoCard).join("")+'<div class="gear-info-group-title">Одиночные вещи</div>'+ITEMS.map(gearInfoCard).join("")}
+function gearInfoCard(x,extraClass){const tags=gearBonusTags(x);return '<div class="gear-info-card'+(extraClass?" "+extraClass:"")+'"><b>'+x.name+'</b><div class="gear-info-tags">'+(tags.length?tags.map(t=>'<span class="gear-info-tag">'+t.label+' <b>'+t.value+'</b></span>').join(""):'<span class="gear-info-tag">Нет бонусов</span>')+'</div></div>'}
+/* Сумма бонусов всех комплектов и вещей — в том же формате, что и обычные элементы, чтобы использовать gearBonusTags */
+function gearTotalItem(){
+ const sum={name:"Сумма всех бонусов",bonuses:{}};
+ const extra=["critChance","critDamage","critGaussChance","critGrenadeChance","critGaussDamage","critGrenadeDamage","freeNoCooldown","cooldown"];
+ [...SETS,...ITEMS].forEach(x=>{
+  keys.forEach(k=>{sum.bonuses[k]=(sum.bonuses[k]||0)+((x.bonuses&&x.bonuses[k])||0)});
+  extra.forEach(k=>{sum[k]=(sum[k]||0)+(x[k]||0)});
+ });
+ return sum;
+}
+function renderGearInfo(){$("gearInfoBody").innerHTML='<div class="gear-info-group-title">Комплекты</div>'+SETS.map(x=>gearInfoCard(x)).join("")+'<div class="gear-info-group-title">Одиночные вещи</div>'+ITEMS.map(x=>gearInfoCard(x)).join("")+'<div class="gear-info-total-wrap">'+gearInfoCard(gearTotalItem(),"gear-info-total")+'</div>'}
 function openGearInfo(){$("gearInfoModal").classList.add("show");$("gearInfoModal").setAttribute("aria-hidden","false");renderGearInfo()}
 function closeGearInfo(){$("gearInfoModal").classList.remove("show");$("gearInfoModal").setAttribute("aria-hidden","true")}
 
