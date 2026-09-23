@@ -2,3 +2,13 @@
 .select-all{display:flex;align-items:center;gap:8px;margin:10px 18px 8px;color:#a9baca;font-size:12px;cursor:pointer}.select-all input{accent-color:#54bfff;cursor:pointer}.select-all span{user-select:none}.select-all input{accent-color:#54bfff;cursor:pointer}.select-all span{user-select:none}
 
 .level-row input::-webkit-inner-spin-button,.level-row input::-webkit-outer-spin-button,.talent-control input::-webkit-inner-spin-button,.talent-control input::-webkit-outer-spin-button{appearance:none;margin:0}.level-row input,.talent-control input{-moz-appearance:textfield}.talent-control button:hover,.level-row button:hover{background:#162d41}
+
+/* Компактный блок талантов */
+.talents{gap:0}
+.talents label{height:29px;grid-template-columns:25px 1fr 88px}
+.talent-control{grid-template-columns:26px 36px 26px;width:88px;height:26px!important}
+.talent-control button{width:26px;height:26px;padding:0;font-size:16px;line-height:26px}
+.talent-control input,.talents .talent-control input{width:36px!important;height:26px!important;padding:0!important;margin:0!important;background:#091521!important;color:#e7f0f8!important;text-align:center!important;font-size:13px!important;font-weight:600!important;opacity:1!important;display:block!important}
+.talent-control button:first-child{border-radius:5px 0 0 5px}
+.talent-control button:last-child{border-radius:0 5px 5px 0}
+.talent-control{overflow:hidden}
