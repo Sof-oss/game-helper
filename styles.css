@@ -93,16 +93,6 @@
 .talent-node-game.on-path{border-color:#54bfff}
 .talent-node-game.on-path:not(.selected){box-shadow:inset 0 0 0 1px rgba(0,0,0,.36),0 0 14px rgba(84,191,255,.4)}
 
-/* Тултип талантов при наведении */
-.talent-tooltip{position:fixed;z-index:3000;pointer-events:none;max-width:260px;padding:10px 12px;border:1px solid rgba(176,176,170,.5);background:#111213f2;color:#ccc;font-size:12px;line-height:1.45;box-shadow:0 10px 28px rgba(0,0,0,.55);opacity:0;transition:opacity .1s ease;left:-9999px;top:-9999px}
-.talent-tooltip.show{opacity:1}
-.talent-tooltip b{display:block;color:#f0f0ec;font-size:13px;margin-bottom:3px}
-.talent-tooltip-rank{display:block;color:#9a9d9e;font-size:11px;margin-bottom:7px}
-.talent-tooltip-effect{display:flex;flex-direction:column;gap:1px}
-.talent-tooltip-effect span{color:#8a8d8e;font-size:11px}
-.talent-tooltip-effect .talent-rank-done{color:#d2d2cd}
-.talent-tooltip-effect b{color:#f0ae58}
-
 /* Pinch-zoom / панорама дерева талантов */
 .talent-flow-wrap{overflow:hidden;touch-action:none;cursor:grab}
 .talent-flow-canvas{transform-origin:0 0;will-change:transform}

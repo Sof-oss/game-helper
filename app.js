@@ -86,28 +86,6 @@ $("selectAllEquipment").addEventListener("change",e=>{state.sets.clear();state.i
 $("level").addEventListener("input",()=>{saveState();calc()});
 $("resetAll").onclick=()=>{if(!confirm("Точно сбросить весь прогресс — уровень, снаряжение и все очки талантов?"))return;state.sets.clear();state.items.clear();state.talents={};$("level").value=1;saveState();render()};
 
-/* Тултип талантов при наведении */
-document.addEventListener("mouseover",e=>{
- const node=e.target.closest(".talent-node-game");if(!node)return;
- const t=talentDef(node.dataset.selectTalent);if(!t)return;
- const tip=$("talentTooltip"),rank=talentRank(t[0]);
- tip.innerHTML='<b>'+t[2]+'</b><span class="talent-tooltip-rank">Ранг '+rank+' / 5</span><div class="talent-tooltip-effect">'+talentEffectLines(t)+'</div>';
- tip.classList.add("show");
-});
-document.addEventListener("mousemove",e=>{
- const tip=$("talentTooltip");if(!tip.classList.contains("show"))return;
- const pad=18;let x=e.clientX+pad,y=e.clientY+pad;
- const maxX=window.innerWidth-280,maxY=window.innerHeight-160;
- if(x>maxX)x=e.clientX-pad-260;
- if(y>maxY)y=e.clientY-pad-140;
- tip.style.left=x+"px";tip.style.top=y+"px";
-});
-document.addEventListener("mouseout",e=>{
- const node=e.target.closest(".talent-node-game");if(!node)return;
- const related=e.relatedTarget;if(related&&related.closest&&related.closest(".talent-node-game")===node)return;
- $("talentTooltip").classList.remove("show");
-});
-
 /* Pinch-zoom и панорамирование дерева талантов (тач) */
 const distTouch=(a,b)=>Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
 const midTouch=(a,b)=>({x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2});
