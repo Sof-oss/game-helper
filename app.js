@@ -1,5 +1,5 @@
 const SETS = [
-  { name: "Первый день в зоне", bonuses: { knife: 5, pistol: 5, auto: 5, grenade: 6, gl: 11, gauss: 36 } },
+  { name: "Первый день в зоне", bonuses: { knife: 5, pistol: 5, auto: 5 } },
   { name: "Любитель прогулок", bonuses: { grenade: 6, gl: 11, gauss: 36 } },
   { name: "Болотник", bonuses: { knife: 14, pistol: 14, auto: 16 } },
   { name: "Омон", bonuses: { grenade: 30, gl: 62, gauss: 198 } },
@@ -10,10 +10,11 @@ const SETS = [
   { name: "Научный сотрудник", bonuses: { knife: 18, pistol: 19, auto: 22 } },
   { name: "Копатель", bonuses: { grenade: 22, gl: 45, gauss: 144 }, critGrenadeChance: 0.01, critGrenadeDamage: 75 },
   { name: "Жестянка", bonuses: { grenade: 60, gl: 124, gauss: 396 }, critChance: 0.03, critDamage: 75 },
-  { name: "Комбинезон «Рассвет»", bonuses: { knife: 12, pistol: 12, auto: 14 }, cooldown: 0.03, freeNoCooldown: 0.01 }
+
 ];
 
 const ITEMS = [
+  { name: "Комбинезон «Рассвет»", bonuses: { knife: 12, pistol: 12, auto: 14 }, cooldown: 0.03, freeNoCooldown: 0.01 },
   { name: 'Футболка «Сердце Зоны»', bonuses: { grenade: 1, gl: 2, gauss: 7 } },
   { name: "Кожаная куртка", bonuses: { grenade: 3, gl: 7, gauss: 22 } },
   { name: "Бандитский плащ", bonuses: { grenade: 2, gl: 5, gauss: 14 } }
