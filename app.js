@@ -58,10 +58,14 @@ function totals(){
 }
 function optionMarkup(arr,set,type){return arr.map((x,i)=>'<label class="option"><input type="checkbox" data-type="'+type+'" data-index="'+i+'" '+(set.has(i)?"checked":"")+'><span>'+x.name+'</span></label>').join("")}
 function set(id,v){$(id).textContent=v}
+// Урон оружия на заданном уровне персонажа. MIN_LEVEL — нижняя планка (совпадает с min у инпута уровня),
+// от неё же отсчитывается "чистая" база в breakdown, чтобы прибавка от уровня на 1 lvl всегда была нулевой.
+const MIN_LEVEL=1;
+function baseDamageByLevel(level){return{grenade:Math.round(55*Math.pow(1.02,level)),gl:Math.round(113*Math.pow(1.02,level)),gauss:Math.round(360*Math.pow(1.02,level)),knife:Math.floor(45.85+1.15*level),pistol:Math.floor(47.8+1.2*level),auto:Math.floor(53.65+1.35*level)}}
 function calc(){
  const level=Math.max(1,Math.min(100,num("level")));$("level").value=level;const {total,critChance,critDamage,critGaussChance,critGrenadeChance,critGaussDamage,critGrenadeDamage,critGlDamageTal,noCooldown,cooldown}=totals(),talentStats=talentTotals(),tal=talentStats.total;
- const base={grenade:Math.round(55*Math.pow(1.02,level)),gl:Math.round(113*Math.pow(1.02,level)),gauss:Math.round(360*Math.pow(1.02,level)),knife:Math.floor(45.85+1.15*level),pistol:Math.floor(47.8+1.2*level),auto:Math.floor(53.65+1.35*level)};
- keys.forEach(k=>{const K=k[0].toUpperCase()+k.slice(1);set("base"+K,fmt(base[k]));set("gear"+K,fmt(total[k]-tal[k]));set("talentOut"+K,fmt(tal[k]));set("result"+K,fmt(base[k]+total[k]))});
+ const base=baseDamageByLevel(level),baseFlat=baseDamageByLevel(MIN_LEVEL);
+ keys.forEach(k=>{const K=k[0].toUpperCase()+k.slice(1);set("base"+K,fmt(baseFlat[k]));set("level"+K,fmt(base[k]-baseFlat[k]));set("gear"+K,fmt(total[k]-tal[k]));set("talentOut"+K,fmt(tal[k]));set("result"+K,fmt(base[k]+total[k]))});
  set("critGrenade",((critChance+critGrenadeChance)*100).toFixed(0)+"%");set("critGrenadeDamage",fmt(critDamage+critGrenadeDamage));set("critGl",(critChance*100).toFixed(0)+"%");set("critGlDamage",fmt(critDamage+critGlDamageTal));set("critGauss",((critChance+critGaussChance)*100).toFixed(0)+"%");set("critGaussDamageOut",fmt(critDamage+critGaussDamage));set("noCooldown",(noCooldown*100).toFixed(0)+"%");set("cooldown",(cooldown*100).toFixed(0)+"%");set("firstFreeHit","+"+(talentStats.firstFreeHit*100).toFixed(0)+"%");
 }
 function render(){$("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");$("selectAllEquipment").checked=state.sets.size===SETS.length&&state.items.size===ITEMS.length;renderTalents();calc()}
