@@ -21,7 +21,8 @@ const state={sets:new Set(),items:new Set()};
 const keys=["knife","pistol","auto","grenade","gl","gauss"];
 const names={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс"};
 const bonusText={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс"};
-const $=id=>document.getElementById(id);\nconst STORAGE_KEY="gameHelperState";
+const $=id=>document.getElementById(id);
+const STORAGE_KEY="gameHelperState";
 function saveState(){
  const data={sets:[...state.sets],items:[...state.items],level:$("level").value,talents:{}};
  ["talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>data.talents[id]=$(id).value);
@@ -31,8 +32,10 @@ function loadState(){
  try{
   const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
   if(!data)return;
-  state.sets=new Set(Array.isArray(data.sets)?data.sets.filter(i=>Number.isInteger(i)&&i>=0&&i<SETS.length):[]);
-  state.items=new Set(Array.isArray(data.items)?data.items.filter(i=>Number.isInteger(i)&&i>=0&&i<ITEMS.length):[]);
+  state.sets.clear();
+  state.items.clear();
+  (Array.isArray(data.sets)?data.sets:[]).filter(i=>Number.isInteger(i)&&i>=0&&i<SETS.length).forEach(i=>state.sets.add(i));
+  (Array.isArray(data.items)?data.items:[]).filter(i=>Number.isInteger(i)&&i>=0&&i<ITEMS.length).forEach(i=>state.items.add(i));
   if(data.level!==undefined) $("level").value=data.level;
   if(data.talents) Object.entries(data.talents).forEach(([id,value])=>{if($(id)&&value!==undefined)$(id).value=value});
  }catch{}
@@ -103,13 +106,16 @@ document.addEventListener("click",e=>{
  const id=b.dataset.step, input=$(id), dir=Number(b.dataset.dir)||0;
  const min=Number(input.min)||0, max=Number(input.max)||999;
  input.value=Math.min(max,Math.max(min,(Number(input.value)||0)+dir));
+ saveState();
  calc();
 });
 $("selectAllEquipment").addEventListener("change",e=>{
  state.sets.clear();state.items.clear();
  if(e.target.checked){SETS.forEach((_,i)=>state.sets.add(i));ITEMS.forEach((_,i)=>state.items.add(i))}
+ saveState();
  render();
 });
 ["level","talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).addEventListener("input",()=>{saveState();calc()}));
-$("resetAll").onclick=()=>{state.sets.clear();state.items.clear();$("level").value=1;["talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).value=0);render()};
+$("resetAll").onclick=()=>{state.sets.clear();state.items.clear();$("level").value=1;["talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).value=0);saveState();render()};
+loadState();
 render();
