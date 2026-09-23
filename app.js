@@ -26,10 +26,10 @@ const num=id=>Number($(id).value)||0;
 function fmt(n){return Math.round(n).toLocaleString("ru-RU")}
 function totals(){
  const total=Object.fromEntries(keys.map(k=>[k,0]));
- let critChance=0,critDamage=0,critGaussChance=0,noCooldown=0,cooldown=0;
- [...state.sets].forEach(i=>{const x=SETS[i];keys.forEach(k=>total[k]+=x.bonuses[k]||0);critChance+=x.critChance||0;critDamage+=x.critDamage||0;critGaussChance+=x.critGaussChance||0;noCooldown+=x.freeNoCooldown||0;cooldown+=x.cooldown||0});
- [...state.items].forEach(i=>{const x=ITEMS[i];keys.forEach(k=>total[k]+=x.bonuses[k]||0);noCooldown+=x.freeNoCooldown||0;cooldown+=x.cooldown||0});
- return {total,critChance,critDamage,critGaussChance,noCooldown,cooldown};
+ let critChance=0,critDamage=0,critGaussChance=0,critGrenadeChance=0,critGaussDamage=0,critGrenadeDamage=0,noCooldown=0,cooldown=0;
+ [...state.sets].forEach(i=>{const x=SETS[i];keys.forEach(k=>total[k]+=x.bonuses[k]||0);critChance+=x.critChance||0;critDamage+=x.critDamage||0;critGaussChance+=x.critGaussChance||0;critGrenadeChance+=x.critGrenadeChance||0;critGaussDamage+=x.critGaussDamage||0;critGrenadeDamage+=x.critGrenadeDamage||0;noCooldown+=x.freeNoCooldown||0;cooldown+=x.cooldown||0});
+ [...state.items].forEach(i=>{const x=ITEMS[i];keys.forEach(k=>total[k]+=x.bonuses[k]||0);critChance+=x.critChance||0;critDamage+=x.critDamage||0;critGaussChance+=x.critGaussChance||0;critGrenadeChance+=x.critGrenadeChance||0;critGaussDamage+=x.critGaussDamage||0;critGrenadeDamage+=x.critGrenadeDamage||0;noCooldown+=x.freeNoCooldown||0;cooldown+=x.cooldown||0});
+ return {total,critChance,critDamage,critGaussChance,critGrenadeChance,critGaussDamage,critGrenadeDamage,noCooldown,cooldown};
 }
 function optionMarkup(arr,set,type){
  return arr.map((x,i)=>`<label class="option"><input type="checkbox" data-type="${type}" data-index="${i}" ${set.has(i)?"checked":""}><span>${x.name}</span></label>`).join("");
@@ -55,14 +55,13 @@ function itemSummary(){
 }
 function set(id,v){$(id).textContent=v}
 function calc(){
- const level=Math.max(0,num("level"));const t={knife:num("talentKnife"),pistol:num("talentPistol"),auto:num("talentAuto"),grenade:num("talentGrenade"),gl:num("talentGl"),gauss:num("talentGauss")};const {total,critChance,critDamage,noCooldown,cooldown}=totals();
+ const level=Math.max(0,num("level"));const t={knife:num("talentKnife"),pistol:num("talentPistol"),auto:num("talentAuto"),grenade:num("talentGrenade"),gl:num("talentGl"),gauss:num("talentGauss")};const {total,critChance,critDamage,critGaussChance,critGrenadeChance,critGaussDamage,critGrenadeDamage,noCooldown,cooldown}=totals();
  const base={grenade:Math.round(55*Math.pow(1.02,level)),gl:Math.round(113*Math.pow(1.02,level)),gauss:Math.round(360*Math.pow(1.02,level)),knife:Math.floor(45.85+1.15*level),pistol:Math.floor(47.8+1.2*level),auto:Math.floor(53.65+1.35*level)};
  keys.forEach(k=>{set("base"+k[0].toUpperCase()+k.slice(1),fmt(base[k]));set("gear"+k[0].toUpperCase()+k.slice(1),fmt(total[k]));set("talentOut"+k[0].toUpperCase()+k.slice(1),fmt(t[k]));set("result"+k[0].toUpperCase()+k.slice(1),fmt(base[k]+total[k]+t[k]))});
  set("critChance",(critChance*100).toFixed(0)+"%");set("critDamage",fmt(critDamage)+"%");set("noCooldown",(noCooldown*100).toFixed(0)+"%");set("cooldown",(cooldown*100).toFixed(0)+"%");
 }
 function render(){
- $("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");
-$("setSummary").innerHTML=summary(SETS,state.sets);$("itemSummary").innerHTML=itemSummary();calc();
+ $("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");calc();
 }
 document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items;const n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);render()});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));render()}});
