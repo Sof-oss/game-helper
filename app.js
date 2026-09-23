@@ -63,7 +63,7 @@ function calc(){
 function render(){
  $("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");
  $("setSelected").innerHTML=chips(SETS,state.sets,"set");$("itemSelected").innerHTML=chips(ITEMS,state.items,"item");
- set("setCount",state.sets.size);set("itemCount",state.items.size);$("setSummary").innerHTML=summary(SETS,state.sets);$("itemSummary").innerHTML=itemSummary();calc();
+$("setSummary").innerHTML=summary(SETS,state.sets);$("itemSummary").innerHTML=itemSummary();calc();
 }
 document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items;const n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);render()});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));render()}});
