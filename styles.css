@@ -128,7 +128,7 @@
 .extra-grid strong{display:block;max-width:100%;line-height:1.1;overflow-wrap:anywhere;text-align:center;}
 
 /* Keep extra stat content centered inside each card */
-.extra-grid>div{display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto;justify-items:center;align-content:center;align-items:center;text-align:center;gap:2px;padding:6px 10px;box-sizing:border-box;min-width:0;}
+.extra-grid>div{display:grid;grid-template-columns:1fr;grid-template-rows:auto auto auto;justify-items:center;align-content:center;align-items:center;text-align:center;gap:2px;padding:10px 10px;box-sizing:border-box;min-width:0;min-height:62px;}
 .extra-grid>div>span{grid-row:auto;grid-column:1;font-size:18px;line-height:1;margin:0;text-align:center;}
 .extra-grid small{grid-column:1;grid-row:auto;display:block;width:100%;max-width:100%;line-height:1.2;overflow-wrap:anywhere;text-align:center;}
 .extra-grid strong{grid-column:1;grid-row:auto;display:block;width:100%;max-width:100%;line-height:1.1;overflow-wrap:anywhere;text-align:center;}
