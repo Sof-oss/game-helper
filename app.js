@@ -77,8 +77,9 @@ function render(){
  $("selectAllEquipment").checked=all;
  calc();
 }
+function setPageSubtitle(text){$("pageSubtitle").textContent=text}
 function showToast(){const t=$("toast");t.classList.add("show");clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
-document.addEventListener("click",e=>{const guide=e.target.closest(".guide-link");if(guide){e.preventDefault();showToast();return}});
+document.addEventListener("click",e=>{const guide=e.target.closest(".guide-link");if(guide){e.preventDefault();setPageSubtitle("Гайды");showToast();return}const calcLink=e.target.closest(".main-nav a:not(.guide-link)");if(calcLink){e.preventDefault();setPageSubtitle("Калькулятор урона");return}});
 document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items;const n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);render()});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));render()}});
 document.addEventListener("click",e=>{
