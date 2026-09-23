@@ -58,7 +58,7 @@ function calc(){
  const level=Math.max(0,num("level"));const t={knife:num("talentKnife"),pistol:num("talentPistol"),auto:num("talentAuto"),grenade:num("talentGrenade"),gl:num("talentGl"),gauss:num("talentGauss")};const {total,critChance,critDamage,critGaussChance,critGrenadeChance,critGaussDamage,critGrenadeDamage,noCooldown,cooldown}=totals();
  const base={grenade:Math.round(55*Math.pow(1.02,level)),gl:Math.round(113*Math.pow(1.02,level)),gauss:Math.round(360*Math.pow(1.02,level)),knife:Math.floor(45.85+1.15*level),pistol:Math.floor(47.8+1.2*level),auto:Math.floor(53.65+1.35*level)};
  keys.forEach(k=>{set("base"+k[0].toUpperCase()+k.slice(1),fmt(base[k]));set("gear"+k[0].toUpperCase()+k.slice(1),fmt(total[k]));set("talentOut"+k[0].toUpperCase()+k.slice(1),fmt(t[k]));set("result"+k[0].toUpperCase()+k.slice(1),fmt(base[k]+total[k]+t[k]))});
- set("critChance",(critChance*100).toFixed(0)+"%");set("critDamage",fmt(critDamage)+"%");set("noCooldown",(noCooldown*100).toFixed(0)+"%");set("cooldown",(cooldown*100).toFixed(0)+"%");
+ set("critChance",(critChance*100).toFixed(0)+"%");set("critDamage",fmt(critDamage));set("critChanceGrenade",(critGrenadeChance*100).toFixed(0)+"%");set("critChanceGauss",(critGaussChance*100).toFixed(0)+"%");set("critDamageGrenade",fmt(critGrenadeDamage));set("critDamageGauss",fmt(critGaussDamage));set("noCooldown",(noCooldown*100).toFixed(0)+"%");set("cooldown",(cooldown*100).toFixed(0)+"%");
 }
 function render(){
  $("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");calc();
