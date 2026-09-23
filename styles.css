@@ -106,3 +106,54 @@
 /* Pinch-zoom / панорама дерева талантов */
 .talent-flow-wrap{overflow:hidden;touch-action:none;cursor:grab}
 .talent-flow-canvas{transform-origin:0 0;will-change:transform}
+
+/* === Доп. адаптация под мобильные (телефоны) === */
+
+/* Защита от горизонтального скролла всей страницы */
+html,body{overflow-x:hidden}
+
+/* iOS Safari зумит страницу при фокусе на инпуте с font-size < 16px */
+.level-row input{font-size:16px}
+
+@media(max-width:430px){
+  /* Шапка */
+  .header-inner{padding:8px 10px;gap:8px}
+  .logo{gap:8px}
+  .rad-logo{width:32px;height:38px;font-size:28px}
+  .logo-title{font-size:19px;letter-spacing:1.5px}
+  .main-nav a{padding:0 8px;font-size:11px;gap:6px}
+  .main-nav a span{font-size:17px}
+
+  /* Заголовок результата */
+  .result-title{padding:4px 8px 10px;gap:8px}
+  .result-title h1{font-size:21px}
+  .target-icon{font-size:27px}
+  .result-panel{padding:10px}
+
+  /* Карточки урона — компактнее и с более крупным тач-таргетом чисел */
+  .damage-card{padding:13px 14px;min-height:auto;grid-template-columns:50px 1fr}
+  .weapon-icon{width:50px;height:50px;background-size:300px 50px}
+  .damage-card h3{font-size:13px;margin-bottom:5px}
+  .damage-card strong{font-size:22px}
+  .breakdown{font-size:10px;gap:4px 8px}
+  .crit-chip{font-size:10px;padding:2px 7px}
+
+  /* Доп. характеристики — в столбец вместо сжатия в ряд */
+  .extra-grid{flex-direction:column;gap:8px}
+  .extra-grid>div{width:100%;flex:1 1 auto;height:auto;min-height:52px}
+
+  /* Более удобные тач-таргеты */
+  .level-row button,.level-row input{height:42px}
+  .option{min-height:36px}
+  .option input{width:18px;height:18px}
+  .talent-open{height:46px}
+
+  /* Модалка талантов на маленьком экране */
+  .talent-game-header{padding:8px 12px}
+  .talent-game-header h2{font-size:19px}
+  .talent-points{font-size:11px;padding:5px 8px}
+  .talent-icon-button{width:32px;height:32px;font-size:20px}
+  .talent-node-game{width:82px;height:82px}
+  .talent-node-art{font-size:32px}
+  .talent-detail-art{width:56px;height:56px;font-size:26px}
+}
