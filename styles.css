@@ -12,3 +12,10 @@
 .talent-control button:first-child{border-radius:5px 0 0 5px}
 .talent-control button:last-child{border-radius:0 5px 5px 0}
 .talent-control{overflow:hidden}
+
+/* Компактные дополнительные характеристики */
+.extra-grid{gap:8px}
+.extra-grid>div{padding:9px 12px;min-height:52px}
+.extra-grid>div>span{font-size:18px}
+.extra-grid small{font-size:11px}
+.extra-grid strong{font-size:18px}
