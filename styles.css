@@ -36,3 +36,50 @@
 .side-title .clothes-icon{font-size:16px;line-height:18px;width:18px;height:18px;display:inline-block;filter:grayscale(1)}
 .main-nav .guide-link span{font-size:16px;line-height:1}
 .items-divider>span{font-size:16px}
+
+
+/* Talent tree */
+.talent-open{width:100%;height:42px;border:1px solid #21445c;border-radius:7px;background:linear-gradient(180deg,#0d2231,#091722);color:#cfe0ec;display:grid;grid-template-columns:25px 1fr auto;align-items:center;gap:8px;padding:0 10px;cursor:pointer;text-align:left}
+.talent-open:hover{background:#10293a;border-color:#2e6384}
+.talent-open>span:first-child{font-size:18px;color:#54bfff;text-align:center}
+.talent-open b{font-size:11px;color:#73c8ff;font-weight:600}
+.talent-summary{margin-top:6px;color:#71889b;font-size:10px;text-align:right}
+.talent-modal{position:fixed;inset:0;display:none;z-index:2000}
+.talent-modal.show{display:block}
+.talent-backdrop{position:absolute;inset:0;background:rgba(2,7,11,.78);backdrop-filter:blur(4px)}
+.talent-dialog{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1420px,94vw);height:min(900px,92vh);border:1px solid #274a61;border-radius:12px;background:linear-gradient(180deg,#08151f,#050d14);box-shadow:0 25px 80px #000d;overflow:hidden;display:flex;flex-direction:column}
+.talent-dialog-head{min-height:82px;padding:17px 20px;border-bottom:1px solid #193448;background:linear-gradient(180deg,#0b1b27,#08141e);display:flex;align-items:center;gap:20px}
+.talent-dialog-head h2{margin:0;color:#e6f1fa;font-size:24px}
+.talent-dialog-head p{margin:4px 0 0;color:#7f96a9;font-size:11px}
+.talent-points{margin-left:auto;padding:9px 14px;border:1px solid #21465e;border-radius:7px;background:#07131d;color:#8098aa;white-space:nowrap}
+.talent-points strong{font-size:19px;color:#57c0ff}
+.talent-close{width:36px;height:36px;border:1px solid #29475b;border-radius:6px;background:#0a1823;color:#9db2c3;font-size:25px;cursor:pointer}
+.talent-close:hover{background:#152a39;color:#fff}
+.talent-branches{overflow:auto;padding:18px;display:grid;grid-template-columns:1fr 1.25fr;gap:18px}
+.talent-branch{min-width:760px}
+.talent-branch>header{display:flex;align-items:end;justify-content:space-between;padding:0 3px 12px;border-bottom:1px solid #1a3547;margin-bottom:10px}
+.talent-branch>header h3{margin:0;color:#dbe8f2;font-size:18px}
+.talent-branch>header p{margin:3px 0 0;color:#71899c;font-size:11px}
+.talent-branch>header>span{font-size:11px;color:#4fbaff}
+.talent-tier{position:relative;margin-bottom:10px}
+.talent-tier-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#536d80;margin:0 0 5px 2px}
+.talent-tier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.talent-branch:nth-child(2) .talent-tier-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.talent-node{position:relative;min-height:166px;border:1px solid #1b3547;border-radius:7px;background:linear-gradient(145deg,#0b1b27,#07131c);padding:9px;overflow:hidden}
+.talent-node.has-rank{border-color:#246487;box-shadow:inset 0 0 18px #0d385025}
+.talent-node.locked{opacity:.58}
+.talent-node.unlocked{opacity:1}
+.talent-node-top{display:flex;justify-content:space-between;color:#526e80;font-size:9px}
+.talent-node-top b{color:#69c5f6;font-size:10px}
+.talent-node h3{margin:7px 0 4px;color:#d8e6ef;font-size:12px;line-height:1.2}
+.talent-node p{margin:0;color:#70879a;font-size:9px;line-height:1.35;min-height:25px}
+.talent-effect{margin-top:7px;color:#8ca4b6;font-size:9px;line-height:1.35}
+.talent-effect b{color:#39dc93}
+.talent-requirement{margin-top:6px;color:#536b7c;font-size:8px;line-height:1.25;min-height:20px}
+.talent-actions{display:flex;gap:5px;margin-top:7px}
+.talent-actions button{height:25px;border:1px solid #24465c;border-radius:4px;background:#0b1c29;color:#a8bfce;font-size:10px;cursor:pointer;padding:0 8px}
+.talent-actions button:hover:not(:disabled){background:#123148;border-color:#3b82aa}
+.talent-actions .talent-up{flex:1;color:#5bc2ff}
+.talent-actions button:disabled{opacity:.45;cursor:default}
+@media(max-width:1150px){.talent-branches{grid-template-columns:1fr}.talent-branch{min-width:0}}
+@media(max-width:760px){.talent-dialog{width:96vw;height:94vh}.talent-dialog-head{padding:12px}.talent-dialog-head p{display:none}.talent-points{padding:7px 9px}.talent-branches{display:block;padding:12px}.talent-branch{margin-bottom:20px}.talent-tier-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.talent-node{min-height:155px}}
