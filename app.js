@@ -17,7 +17,7 @@ const ITEMS=[
 {name:"Кожаная куртка",bonuses:{grenade:3,gl:7,gauss:22}},
 {name:"Бандитский плащ",bonuses:{grenade:2,gl:5,gauss:14}}
 ];
-const state={sets:new Set([3,6]),items:new Set([0])};
+const state={sets:new Set(),items:new Set()};
 const keys=["knife","pistol","auto","grenade","gl","gauss"];
 const names={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс"};
 const bonusText={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс"};
@@ -69,5 +69,5 @@ document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-typ
 document.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));render()}});
 ["level","talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).addEventListener("input",calc));
 $("levelMinus").onclick=()=>{$("level").value=Math.max(0,num("level")-1);calc()};$("levelPlus").onclick=()=>{$("level").value=Math.min(999,num("level")+1);calc()};
-$("resetAll").onclick=()=>{state.sets.clear();state.items.clear();$("level").value=50;["talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).value=0);render()};
+$("resetAll").onclick=()=>{state.sets.clear();state.items.clear();$("level").value=1;["talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).value=0);render()};
 render();
