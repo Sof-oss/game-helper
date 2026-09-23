@@ -79,6 +79,14 @@ function render(){
 }
 document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items;const n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);render()});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));render()}});
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-step]");
+ if(!b)return;
+ const id=b.dataset.step, input=$(id), dir=Number(b.dataset.dir)||0;
+ const min=Number(input.min)||0, max=Number(input.max)||999;
+ input.value=Math.min(max,Math.max(min,(Number(input.value)||0)+dir));
+ calc();
+});
 $("selectAllEquipment").addEventListener("change",e=>{
  state.sets.clear();state.items.clear();
  if(e.target.checked){SETS.forEach((_,i)=>state.sets.add(i));ITEMS.forEach((_,i)=>state.items.add(i))}
