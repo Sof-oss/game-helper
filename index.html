@@ -31,6 +31,17 @@
 <section class="result-panel extra-panel"><div class="section-heading"><span>★</span><b>Дополнительные характеристики</b></div><div class="extra-grid"><div><span>⚔</span><small>Шанс удара без отката</small><strong id="noCooldown">0%</strong></div><div><span>◷</span><small>Сокращение отката</small><strong id="cooldown">0%</strong></div></div></section>
 </div>
 </main></div>
-<div id="talentModal" class="talent-modal" aria-hidden="true"><div class="talent-backdrop" data-close-talents></div><section class="talent-dialog" role="dialog" aria-modal="true" aria-labelledby="talentModalTitle"><header class="talent-dialog-head"><div><h2 id="talentModalTitle">Древо талантов</h2><p>Распределяй очки по веткам. Наведи курсор на талант, чтобы увидеть эффект.</p></div><div class="talent-points"><strong id="modalSpentPoints">0</strong><span> / 135 очков</span></div><button type="button" class="talent-close" data-close-talents aria-label="Закрыть">×</button></header><div class="talent-branches" id="talentBranches"></div></section></div>
+<div id="talentModal" class="talent-modal" aria-hidden="true">
+  <div class="talent-backdrop" data-close-talents></div>
+  <section class="talent-dialog" role="dialog" aria-modal="true" aria-labelledby="talentModalTitle">
+    <div class="talent-game-window">
+      <header class="talent-game-header">
+        <div><h2 id="talentModalTitle">Таланты</h2><p>Усиливай удары по боссам и открывай новые бонусы по цепочке.</p></div>
+        <div class="talent-game-actions"><span class="talent-points"><b id="modalSpentPoints">0</b> / 135</span><button type="button" class="talent-icon-button" data-close-talents aria-label="Закрыть">×</button></div>
+      </header>
+      <div class="talent-game-body"><aside class="talent-game-sidebar" id="talentSidebar"></aside><main class="talent-flow-wrap"><div class="talent-flow" id="talentFlow"></div></main></div>
+    </div>
+  </section>
+</div>
 <div id="toast" class="toast" role="status" aria-live="polite">В разработке</div>
 <script src="talents.js"></script><script src="app.js"></script></body></html>
