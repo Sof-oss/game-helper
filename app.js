@@ -12,10 +12,10 @@ const SETS=[
 {name:"Жестянка",bonuses:{grenade:60,gl:124,gauss:396},critChance:.03,critDamage:75}
 ];
 const ITEMS=[
-{name:"Комбинезон «Рассвет»",bonuses:{knife:12,pistol:12,auto:14},cooldown:.03,freeNoCooldown:.01},
 {name:"Футболка «Сердце Зоны»",bonuses:{grenade:1,gl:2,gauss:7}},
 {name:"Кожаная куртка",bonuses:{grenade:3,gl:7,gauss:22}},
-{name:"Бандитский плащ",bonuses:{grenade:2,gl:5,gauss:14}}
+{name:"Бандитский плащ",bonuses:{grenade:2,gl:5,gauss:14}},
+{name:"Комбинезон «Рассвет»",bonuses:{knife:12,pistol:12,auto:14},cooldown:.03,freeNoCooldown:.01}
 ];
 const state={sets:new Set(),items:new Set()};
 const keys=["knife","pistol","auto","grenade","gl","gauss"];
