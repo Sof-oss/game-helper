@@ -83,6 +83,26 @@ function renderGearInfo(){$("gearInfoBody").innerHTML='<div class="gear-info-gro
 function openGearInfo(){$("gearInfoModal").classList.add("show");$("gearInfoModal").setAttribute("aria-hidden","false");renderGearInfo()}
 function closeGearInfo(){$("gearInfoModal").classList.remove("show");$("gearInfoModal").setAttribute("aria-hidden","true")}
 
+/* Расчёт по жетонам: сколько урона даёт запас жетонов и сколько жетонов нужно на заданный урон */
+const TOKEN_PRICES={grenade:3,gl:5,gauss:15},TOKEN_KEY="gameHelperTokens",TOKEN_WEAPONS=[["grenade","Граната"],["gl","Гранатомёт"],["gauss","Гаусс"]];
+const tokenInt=id=>Math.max(0,Math.floor(Number($(id).value)||0));
+function saveTokens(){try{localStorage.setItem(TOKEN_KEY,JSON.stringify({count:$("tokenCount").value,target:$("tokenTarget").value}))}catch{}}
+function loadTokens(){try{const d=JSON.parse(localStorage.getItem(TOKEN_KEY)||"null");if(!d)return;if(d.count!==undefined)$("tokenCount").value=d.count;if(d.target!==undefined)$("tokenTarget").value=d.target}catch{}}
+/* Урон за удар (снаряжение + таланты + уровень) и ожидаемый урон с учётом крита: урон + шанс × бонус крита */
+function tokenWeaponStats(){
+ const level=Math.max(1,Math.min(100,num("level"))),base=baseDamageByLevel(level),t=totals();
+ const crit={grenade:{chance:t.critChance+t.critGrenadeChance,bonus:t.critDamage+t.critGrenadeDamage},gl:{chance:t.critChance,bonus:t.critDamage+t.critGlDamageTal},gauss:{chance:t.critChance+t.critGaussChance,bonus:t.critDamage+t.critGaussDamage}};
+ return TOKEN_WEAPONS.map(([k,name])=>{const dmg=base[k]+t.total[k],chance=Math.min(1,crit[k].chance),bonus=crit[k].bonus;return{key:k,name,price:TOKEN_PRICES[k],dmg,chance,bonus,avg:dmg+chance*bonus}});
+}
+function renderTokens(){
+ const tokens=tokenInt("tokenCount"),target=tokenInt("tokenTarget"),st=tokenWeaponStats();
+ $("tokenBase").innerHTML=st.map(w=>'<tr><td>'+w.name+'</td><td>'+w.price+'</td><td>'+fmt(w.dmg)+'</td><td>'+(w.chance*100).toFixed(0)+'% / +'+fmt(w.bonus)+'</td><td class="tok-crit">'+fmt(w.avg)+'</td></tr>').join("");
+ $("tokenExpected").innerHTML=st.map(w=>{const shots=Math.floor(tokens/w.price);return '<tr><td>'+w.name+'</td><td>'+fmt(shots)+'</td><td>'+fmt(shots*w.dmg)+'</td><td class="tok-crit">'+fmt(shots*w.avg)+'</td></tr>'}).join("");
+ $("tokenNeeded").innerHTML=st.map(w=>'<tr><td>'+w.name+'</td><td>'+fmt(Math.ceil(target/w.dmg)*w.price)+'</td><td class="tok-crit">'+fmt(Math.ceil(target/w.avg)*w.price)+'</td></tr>').join("");
+}
+function openTokens(){$("tokensModal").classList.add("show");$("tokensModal").setAttribute("aria-hidden","false");renderTokens()}
+function closeTokens(){$("tokensModal").classList.remove("show");$("tokensModal").setAttribute("aria-hidden","true")}
+
 function totals(){
  const total=Object.fromEntries(keys.map(k=>[k,0]));let critChance=0,critDamage=0,critGaussChance=0,critGrenadeChance=0,critGaussDamage=0,critGrenadeDamage=0,noCooldown=0,cooldown=0;
  const addBonuses=x=>{keys.forEach(k=>total[k]+=x.bonuses[k]||0);critChance+=x.critChance||0;critDamage+=x.critDamage||0;critGaussChance+=x.critGaussChance||0;critGrenadeChance+=x.critGrenadeChance||0;critGaussDamage+=x.critGaussDamage||0;critGrenadeDamage+=x.critGrenadeDamage||0;noCooldown+=x.freeNoCooldown||0;cooldown+=x.cooldown||0};
@@ -115,9 +135,11 @@ document.addEventListener("click",e=>{
  if(e.target.closest("[data-close-talents]")){closeTalents();return}
  if(e.target.closest("#openGearInfo")){openGearInfo();return}
  if(e.target.closest("[data-close-gear-info]")){closeGearInfo();return}
+ if(e.target.closest("#openTokens")){openTokens();return}
+ if(e.target.closest("[data-close-tokens]")){closeTokens();return}
  const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));saveState();render()}
 });
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(talentDetailOpen){talentDetailOpen=false;renderTalents()}else if($("gearInfoModal").classList.contains("show")){closeGearInfo()}else closeTalents()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(talentDetailOpen){talentDetailOpen=false;renderTalents()}else if($("tokensModal").classList.contains("show")){closeTokens()}else if($("gearInfoModal").classList.contains("show")){closeGearInfo()}else closeTalents()}});
 document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items,n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);saveState();render()});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-step]");if(!b)return;const input=$(b.dataset.step),dir=Number(b.dataset.dir)||0,min=Number(input.min)||0,max=Number(input.max)||999;input.value=Math.min(max,Math.max(min,(Number(input.value)||0)+dir));saveState();calc()});
 $("selectAllEquipment").addEventListener("change",e=>{state.sets.clear();state.items.clear();if(e.target.checked){SETS.forEach((_,i)=>state.sets.add(i));ITEMS.forEach((_,i)=>state.items.add(i))}saveState();render()});
@@ -176,4 +198,5 @@ document.addEventListener("wheel",e=>{
  applyTreeTransform();
 },{passive:false});
 
-loadState();render();
+["tokenCount","tokenTarget"].forEach(id=>$(id).addEventListener("input",()=>{saveTokens();renderTokens()}));
+loadState();loadTokens();render();

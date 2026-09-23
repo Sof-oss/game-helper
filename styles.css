@@ -190,3 +190,24 @@ html,body{overflow-x:hidden}
 .gear-info-total{border-color:#2e6384;background:linear-gradient(135deg,#0d2231,#0a1a27);box-shadow:0 0 14px rgba(84,191,255,.12)}
 .gear-info-total>b{color:#73c8ff}
 @media(max-width:650px){.gear-info-total-wrap{margin:6px -14px -14px;padding:10px 14px 14px}}
+
+/* Расчёт по жетонам */
+.tokens-btn{margin-left:auto;height:28px;padding:0 12px;border:1px solid #21445c;border-radius:6px;background:linear-gradient(180deg,#0d2231,#091722);color:#cfe0ec;font:inherit;font-size:12px;cursor:pointer;white-space:nowrap}
+.tokens-btn:hover{background:#10293a;border-color:#2e6384}
+.tokens-btn:focus-visible{outline:2px solid #54bfff;outline-offset:2px}
+.tokens-window{width:min(980px,94vw)}
+.tok-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tok-col{border:1px solid #1a3346;border-radius:8px;background:linear-gradient(135deg,#0b1925,#09141e);padding:12px}
+.tok-field{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;color:#cbd9e5;font-size:13px;font-weight:600}
+.tok-field input{width:140px;height:36px;border:1px solid #1b3447;border-radius:6px;background:#0b1f30;color:#e7f0f8;text-align:center;font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+.tok-field input:focus-visible{outline:2px solid #54bfff;outline-offset:2px}
+.tok-field input::-webkit-inner-spin-button,.tok-field input::-webkit-outer-spin-button{appearance:none;margin:0}
+.tok-field input{-moz-appearance:textfield}
+.tok-title{font-size:12px;color:#7c93a6;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.tok-table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.tok-table th{color:#7c93a6;font-size:11px;font-weight:600;text-align:right;padding:5px 8px;border-bottom:1px solid #193246}
+.tok-table td{text-align:right;padding:7px 8px;border-top:1px solid #142735;color:#e3edf6}
+.tok-table th:first-child,.tok-table td:first-child{text-align:left;color:#cbd9e5}
+.tok-table td.tok-crit,.tok-table th.tok-crit{color:#ffb3b5}
+.tok-note{color:#71889b;font-size:11px;line-height:1.5}
+@media(max-width:650px){.tok-grid{grid-template-columns:1fr}.tok-field input{width:120px}.tok-table{font-size:12px}.tok-table th,.tok-table td{padding:6px 4px}.tokens-btn{font-size:11px;padding:0 9px}}

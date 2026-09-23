@@ -23,7 +23,7 @@
 </aside>
 <main class="content">
 <div class="result-title"><span class="target-icon">◎</span><h1>Результат расчёта</h1></div>
-<section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (оружие за жетоны)</b></div><div class="damage-grid">
+<section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (оружие за жетоны)</b><button type="button" id="openTokens" class="tokens-btn">Расчёт по жетонам</button></div><div class="damage-grid">
 <article class="damage-card"><div class="weapon-icon weapon-grenade" aria-hidden="true"></div><div><h3>Граната</h3><strong id="resultGrenade">0</strong></div><div class="breakdown"><span class="breakdown-base">База: <em id="baseGrenade">0</em> &nbsp;&nbsp; + &nbsp; Уровень: <em id="levelGrenade">0</em> &nbsp;&nbsp; + &nbsp; Экипировка: <em id="gearGrenade">0</em> &nbsp;&nbsp; + &nbsp; Таланты: <em class="talent" id="talentOutGrenade">0</em></span><span class="crit-chip"><span class="crit-chip-label">Крит</span><em id="critGrenade">0%</em><span class="crit-chip-sep">/</span><em id="critGrenadeDamage">0</em></span></div></article><article class="damage-card"><div class="weapon-icon weapon-ubgl" aria-hidden="true"></div><div><h3>Гранатомёт</h3><strong id="resultGl">0</strong></div><div class="breakdown"><span class="breakdown-base">База: <em id="baseGl">0</em> &nbsp;&nbsp; + &nbsp; Уровень: <em id="levelGl">0</em> &nbsp;&nbsp; + &nbsp; Экипировка: <em id="gearGl">0</em> &nbsp;&nbsp; + &nbsp; Таланты: <em class="talent" id="talentOutGl">0</em></span><span class="crit-chip"><span class="crit-chip-label">Крит</span><em id="critGl">0%</em><span class="crit-chip-sep">/</span><em id="critGlDamage">0</em></span></div></article><article class="damage-card"><div class="weapon-icon weapon-gauss" aria-hidden="true"></div><div><h3>Гаусс</h3><strong id="resultGauss">0</strong></div><div class="breakdown"><span class="breakdown-base">База: <em id="baseGauss">0</em> &nbsp;&nbsp; + &nbsp; Уровень: <em id="levelGauss">0</em> &nbsp;&nbsp; + &nbsp; Экипировка: <em id="gearGauss">0</em> &nbsp;&nbsp; + &nbsp; Таланты: <em class="talent" id="talentOutGauss">0</em></span><span class="crit-chip"><span class="crit-chip-label">Крит</span><em id="critGauss">0%</em><span class="crit-chip-sep">/</span><em id="critGaussDamageOut">0</em></span></div></article>
 </div></section>
 <section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (бесплатные удары)</b></div><div class="damage-grid">
@@ -53,6 +53,36 @@
         <div class="talent-game-actions"><button type="button" class="talent-icon-button" data-close-gear-info aria-label="Закрыть">×</button></div>
       </header>
       <div class="gear-info-body" id="gearInfoBody"></div>
+    </div>
+  </section>
+</div>
+<div id="tokensModal" class="talent-modal gear-info-modal" aria-hidden="true">
+  <div class="talent-backdrop" data-close-tokens></div>
+  <section class="talent-dialog gear-info-dialog" role="dialog" aria-modal="true" aria-labelledby="tokensModalTitle">
+    <div class="talent-game-window gear-info-window tokens-window">
+      <header class="talent-game-header">
+        <div><h2 id="tokensModalTitle">Расчёт по жетонам</h2><p>По текущему уровню, снаряжению и талантам из калькулятора.</p></div>
+        <div class="talent-game-actions"><button type="button" class="talent-icon-button" data-close-tokens aria-label="Закрыть">×</button></div>
+      </header>
+      <div class="gear-info-body">
+        <div class="tok-grid">
+          <section class="tok-col">
+            <label class="tok-field"><span>Количество жетонов</span><input id="tokenCount" type="number" min="0" step="1" value="7200" inputmode="numeric"></label>
+            <div class="tok-title">Ожидаемый урон</div>
+            <table class="tok-table"><thead><tr><th>Оружие</th><th>Ударов</th><th>Без крита</th><th class="tok-crit">С критом</th></tr></thead><tbody id="tokenExpected"></tbody></table>
+          </section>
+          <section class="tok-col">
+            <label class="tok-field"><span>Нужное количество урона</span><input id="tokenTarget" type="number" min="0" step="1" value="1000000" inputmode="numeric"></label>
+            <div class="tok-title">Необходимо жетонов</div>
+            <table class="tok-table"><thead><tr><th>Оружие</th><th>Без крита</th><th class="tok-crit">С критом</th></tr></thead><tbody id="tokenNeeded"></tbody></table>
+          </section>
+        </div>
+        <div class="gear-info-group-title">Исходные данные</div>
+        <section class="tok-col">
+          <table class="tok-table"><thead><tr><th>Оружие</th><th>Цена, жетонов</th><th>Урон за удар</th><th>Крит (шанс / бонус)</th><th class="tok-crit">Средний урон с критом</th></tr></thead><tbody id="tokenBase"></tbody></table>
+        </section>
+        <p class="tok-note">Цена за удар: граната — 3, гранатомёт — 5, гаусс — 15 жетонов. Средний урон с критом = урон + шанс крита × бонус крита. Количество ударов целое: жетоны считаются на целые удары.</p>
+      </div>
     </div>
   </section>
 </div>
