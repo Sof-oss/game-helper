@@ -86,10 +86,9 @@ function calculate() {
   const talentGauss = Number(document.getElementById("talentGauss").value) || 0;
   const { total, critGaussChance, critChance, noCooldown, cooldown } = selectedBonuses();
 
-  // Формулы из запроса пользователя.
   const grenade = Math.round(55 * Math.pow(1.02, level)) + total.grenade + talentGrenade;
   const gl = Math.round(113 * Math.pow(1.02, level)) + total.gl + talentGl;
-  const gauss = Math.round(340 * Math.pow(1.02, level)) + total.gauss + talentGauss;
+  const gauss = Math.round(360 * Math.pow(1.02, level)) + total.gauss + talentGauss;
 
   const knife = Math.floor(45.85 + 1.15 * level) + total.knife;
   const pistol = Math.floor(47.8 + 1.2 * level) + total.pistol;
