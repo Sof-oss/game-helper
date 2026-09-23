@@ -211,3 +211,6 @@ html,body{overflow-x:hidden}
 .tok-table td.tok-crit,.tok-table th.tok-crit{color:#ffb3b5}
 .tok-note{color:#71889b;font-size:11px;line-height:1.5}
 @media(max-width:650px){.tok-grid{grid-template-columns:1fr}.tok-field input{width:120px}.tok-table{font-size:12px}.tok-table th,.tok-table td{padding:6px 4px}.tokens-btn{font-size:11px;padding:0 9px}}
+
+/* Сноска под блоком урона за жетоны */
+.damage-footnote{margin:10px 2px 0;color:#71889b;font-size:11px;line-height:1.4}
