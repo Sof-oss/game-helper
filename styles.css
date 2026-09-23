@@ -156,6 +156,8 @@ html,body{overflow-x:hidden}
   .talent-node-game{width:82px;height:82px}
   .talent-node-art{font-size:32px}
   .talent-detail-art{width:56px;height:56px;font-size:26px}
+}
+
 /* Подсказка в сайдбаре вместо блока описания */
 .talent-side-hint{color:#777;font-size:11px;line-height:1.5;padding:10px 2px 0;border-top:1px solid #34383a;margin-top:10px}
 
@@ -168,4 +170,3 @@ html,body{overflow-x:hidden}
 .talent-detail-close{position:absolute;top:-14px;right:-14px;width:30px;height:30px;border:1px solid #404447;border-radius:50%;background:#1b1d1e;color:#ddd;font-size:17px;line-height:1;cursor:pointer}
 @keyframes talentDetailIn{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
 @media(max-width:650px){.talent-detail-overlay{padding:12px}.talent-detail-modal{max-height:82vh}.talent-detail-close{top:-12px;right:-12px;width:28px;height:28px}}
-}
