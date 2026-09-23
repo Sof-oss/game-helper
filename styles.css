@@ -132,3 +132,13 @@
 .extra-grid>div>span{grid-row:auto;grid-column:1;font-size:18px;line-height:1;margin:0;text-align:center;}
 .extra-grid small{grid-column:1;grid-row:auto;display:block;width:100%;max-width:100%;line-height:1.2;overflow-wrap:anywhere;text-align:center;}
 .extra-grid strong{grid-column:1;grid-row:auto;display:block;width:100%;max-width:100%;line-height:1.1;overflow-wrap:anywhere;text-align:center;}
+
+/* Landing page */
+.home-page{min-height:calc(100vh - 76px);display:flex;align-items:center;justify-content:center;padding:40px 20px;box-sizing:border-box;}
+.home-hero{text-align:center;max-width:620px;padding:46px 54px;border:1px solid #193246;border-radius:12px;background:linear-gradient(180deg,#091722,#07121b);box-shadow:0 12px 35px rgba(0,0,0,.22);}
+.home-symbol{font-size:72px;line-height:1;color:#dbe8f3;margin-bottom:18px;}
+.home-hero h1{margin:0 0 12px;font-size:34px;color:#edf5fc;}
+.home-hero p{margin:0 0 26px;color:#8fa4b5;font-size:14px;}
+.home-calculator-button{border:1px solid #2b5872;border-radius:7px;background:#0b1c29;color:#dfeaf3;padding:11px 18px;font:inherit;font-size:13px;cursor:pointer;}
+.home-calculator-button:hover{background:#10283a;}
+@media(max-width:650px){.home-page{min-height:calc(100vh - 120px);padding:24px 14px}.home-hero{padding:34px 24px}.home-hero h1{font-size:28px}}
