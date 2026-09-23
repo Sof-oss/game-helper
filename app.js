@@ -54,7 +54,9 @@ function calc(){
 }
 function render(){$("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");$("selectAllEquipment").checked=state.sets.size===SETS.length&&state.items.size===ITEMS.length;renderTalents();calc()}
 function showToast(){const t=$("toast");t.classList.add("show");clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
+function showPage(page){const home=$("homePage"),calcPage=$("calculatorPage");if(home)home.style.display=page==="home"?"flex":"none";if(calcPage)calcPage.style.display=page==="calculator"?"grid":"none";document.querySelectorAll(".nav-link").forEach(a=>a.classList.toggle("active",a.dataset.page===page));}
 document.addEventListener("click",e=>{
+ const pageLink=e.target.closest("[data-page]");if(pageLink){e.preventDefault();showPage(pageLink.dataset.page);return}
  const guide=e.target.closest(".guide-link");if(guide){e.preventDefault();showToast();return}
  const up=e.target.closest("[data-talent-up]");if(up){const t=talentDef(up.dataset.talentUp);if(t&&canUpgrade(t)){state.talents[t[0]]=talentRank(t[0])+1;saveState();render();openTalents()}return}
  const branch=e.target.closest("[data-talent-branch]");if(branch){currentTalentBranch=branch.dataset.talentBranch;selectedTalentCode=null;renderTalents();return} const select=e.target.closest("[data-select-talent]");if(select){selectedTalentCode=select.dataset.selectTalent;renderTalents();return} const down=e.target.closest("[data-talent-down]");if(down){const t=talentDef(down.dataset.talentDown),rank=talentRank(down.dataset.talentDown);if(t&&rank>0&&canDowngrade(t)){state.talents[t[0]]=rank-1;saveState();render();openTalents()}return}
@@ -69,3 +71,4 @@ $("selectAllEquipment").addEventListener("change",e=>{state.sets.clear();state.i
 $("level").addEventListener("input",()=>{saveState();calc()});
 $("resetAll").onclick=()=>{state.sets.clear();state.items.clear();state.talents={};$("level").value=1;saveState();render()};
 loadState();render();
+showPage("home");
