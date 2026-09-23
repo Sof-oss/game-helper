@@ -72,10 +72,18 @@ function calc(){
  set("noCooldown",(noCooldown*100).toFixed(0)+"%");set("cooldown",(cooldown*100).toFixed(0)+"%");
 }
 function render(){
- $("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");calc();
+ $("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");
+ const all=state.sets.size===SETS.length&&state.items.size===ITEMS.length;
+ $("selectAllEquipment").checked=all;
+ calc();
 }
 document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-type]"))return;const s=i.dataset.type==="set"?state.sets:state.items;const n=Number(i.dataset.index);i.checked?s.add(n):s.delete(n);render()});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));render()}});
+$("selectAllEquipment").addEventListener("change",e=>{
+ state.sets.clear();state.items.clear();
+ if(e.target.checked){SETS.forEach((_,i)=>state.sets.add(i));ITEMS.forEach((_,i)=>state.items.add(i))}
+ render();
+});
 ["level","talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).addEventListener("input",calc));
 $("levelMinus").onclick=()=>{$("level").value=Math.max(0,num("level")-1);calc()};$("levelPlus").onclick=()=>{$("level").value=Math.min(999,num("level")+1);calc()};
 $("resetAll").onclick=()=>{state.sets.clear();state.items.clear();$("level").value=1;["talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).value=0);render()};
