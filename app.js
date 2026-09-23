@@ -22,7 +22,7 @@ const keys=["knife","pistol","auto","grenade","gl","gauss"];
 const names={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс"};
 const bonusText={knife:"Нож",pistol:"Пистолет",auto:"Автомат",grenade:"Граната",gl:"Гранатомёт",gauss:"Гаусс"};
 const $=id=>document.getElementById(id);
-const num=id=>Number($(id).value)||0;
+const num=id=>Math.max(0,Number($(id).value)||0);
 function fmt(n){return Math.round(n).toLocaleString("ru-RU")}
 function totals(){
  const total=Object.fromEntries(keys.map(k=>[k,0]));
@@ -55,7 +55,7 @@ function itemSummary(){
 }
 function set(id,v){$(id).textContent=v}
 function calc(){
- const level=Math.max(0,num("level"));const t={knife:num("talentKnife"),pistol:num("talentPistol"),auto:num("talentAuto"),grenade:num("talentGrenade"),gl:num("talentGl"),gauss:num("talentGauss")};
+ const level=Math.max(1,num("level"));$("level").value=level;const t={knife:num("talentKnife"),pistol:num("talentPistol"),auto:num("talentAuto"),grenade:num("talentGrenade"),gl:num("talentGl"),gauss:num("talentGauss")};
  const {total,critChance,critDamage,critGaussChance,critGrenadeChance,critGaussDamage,critGrenadeDamage,noCooldown,cooldown}=totals();
  const base={grenade:Math.round(55*Math.pow(1.02,level)),gl:Math.round(113*Math.pow(1.02,level)),gauss:Math.round(360*Math.pow(1.02,level)),knife:Math.floor(45.85+1.15*level),pistol:Math.floor(47.8+1.2*level),auto:Math.floor(53.65+1.35*level)};
  keys.forEach(k=>{
@@ -85,6 +85,5 @@ $("selectAllEquipment").addEventListener("change",e=>{
  render();
 });
 ["level","talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).addEventListener("input",calc));
-$("levelMinus").onclick=()=>{$("level").value=Math.max(0,num("level")-1);calc()};$("levelPlus").onclick=()=>{$("level").value=Math.min(999,num("level")+1);calc()};
 $("resetAll").onclick=()=>{state.sets.clear();state.items.clear();$("level").value=1;["talentKnife","talentPistol","talentAuto","talentGrenade","talentGl","talentGauss"].forEach(id=>$(id).value=0);render()};
 render();
