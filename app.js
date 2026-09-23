@@ -33,10 +33,20 @@ function talentTotals(){const total=Object.fromEntries(keys.map(k=>[k,0]));const
 function talentNodeStatus(t){const rank=talentRank(t[0]),ready=canUpgrade(t),locked=t[9].some(req=>talentRank(req)<5);return rank>=5?"maxed":ready?"ready":locked?"locked":"open"}
 function talentNodeIcon(t){const file=TALENT_ASSETS[t[0]],alt=t[2].replace(/"/g,"&quot;");return file?'<img src="assets/'+file+'" alt="'+alt+'" loading="lazy">':"✥"}
 function talentEffectLines(t){const rank=talentRank(t[0]),stat=t[7],values=t[6],target=Array.isArray(t[8])?t[8][0]:t[8],labels={free_boss_damage_flat:"Урон от бесплатных ударов",free_hit_damage_flat:"Урон",first_free_hit_damage_bonus_pct:"Урон первого бесплатного удара",paid_hit_damage_flat:"Урон",paid_hit_crit_damage_flat:"Бонус к критическому урону",paid_hit_crit_chance_pct:"Шанс критического удара",free_hit_cooldown_reduction_pct:"Уменьшение времени перезарядки",free_hit_cooldown_dodge_chance_pct:"Шанс удара без отката"},targetNames={knife:"от ножа",pistol:"от пистолета",rifle:"от автоматной очереди",grenade:"от гранаты",ubgl:"от подствольного гранатомёта",gauss:"от гаусс-пушки"},label=(labels[stat]||stat)+(target?" "+(targetNames[target]||""):""),unit=stat&&stat.endsWith("_pct")?"%":"";return values.map((v,i)=>'<span class="'+(i<rank?"talent-rank-done":"")+'">Ранг '+(i+1)+': <b>+'+v+unit+'</b></span>').join("")}
-function renderTalentDetails(t){if(!t)return '<div class="talent-detail-empty"><span>✥</span><b>Выбери талант</b><small>Нажми на узел дерева, чтобы открыть его описание и прокачку.</small></div>';const rank=talentRank(t[0]),up=canUpgrade(t),down=canDowngrade(t),req=t[9].length?t[9].map(code=>talentDef(code)[2]).join(", "):"Нет",target=Array.isArray(t[8])?t[8][0]:t[8],stat=t[7],labels={free_boss_damage_flat:"Урон от бесплатных ударов",free_hit_damage_flat:"Урон",first_free_hit_damage_bonus_pct:"Урон первого бесплатного удара",paid_hit_damage_flat:"Урон",paid_hit_crit_damage_flat:"Бонус к критическому урону",paid_hit_crit_chance_pct:"Шанс критического удара",free_hit_cooldown_reduction_pct:"Уменьшение времени перезарядки",free_hit_cooldown_dodge_chance_pct:"Шанс удара без отката"},targetNames={knife:"Нож",pistol:"Пистолет",rifle:"Автомат",grenade:"Граната",ubgl:"Гранатомёт",gauss:"Гаусс"},next=rank<5?t[6][rank]:t[6][4];return '<div class="talent-detail"><div class="talent-detail-art">'+talentNodeIcon(t)+'</div><div class="talent-detail-title"><h3>'+t[2]+'</h3><span>'+rank+' / 5</span></div><p class="talent-detail-desc">'+t[3]+'</p><div class="talent-detail-effect"><small>'+labels[stat]+(target?" · "+targetNames[target]:"")+'</small>'+talentEffectLines(t)+'</div><div class="talent-detail-requirement"><span>Требования</span><b>'+req+'</b></div><div class="talent-detail-actions">'+(down?'<button type="button" class="talent-detail-minus" data-talent-down="'+t[0]+'">−</button>':"")+'<button type="button" class="talent-detail-up" data-talent-up="'+t[0]+'" '+(up?"":"disabled")+'>'+(rank>=5?"Максимум":rank?"Прокачать":"Изучить")+(rank<5?" · +"+next+(stat&&stat.endsWith("_pct")?"%":""):"")+'</button></div></div>'}
+function renderTalentDetails(t){if(!t)return '<div class="talent-detail-empty"><span>✥</span><b>Выбери талант</b><small>Нажми на узел дерева, чтобы открыть его описание и прокачку.</small></div>';const rank=talentRank(t[0]),up=canUpgrade(t),down=canDowngrade(t),req=t[9].length?t[9].map(code=>talentDef(code)?.[2]||code).join(", "):"Нет",target=Array.isArray(t[8])?t[8][0]:t[8],stat=t[7],labels={free_boss_damage_flat:"Урон от бесплатных ударов",free_hit_damage_flat:"Урон",first_free_hit_damage_bonus_pct:"Урон первого бесплатного удара",paid_hit_damage_flat:"Урон",paid_hit_crit_damage_flat:"Бонус к критическому урону",paid_hit_crit_chance_pct:"Шанс критического удара",free_hit_cooldown_reduction_pct:"Уменьшение времени перезарядки",free_hit_cooldown_dodge_chance_pct:"Шанс удара без отката"},targetNames={knife:"Нож",pistol:"Пистолет",rifle:"Автомат",grenade:"Граната",ubgl:"Гранатомёт",gauss:"Гаусс"},next=rank<5?t[6][rank]:t[6][4];return '<div class="talent-detail"><div class="talent-detail-art">'+talentNodeIcon(t)+'</div><div class="talent-detail-title"><h3>'+t[2]+'</h3><span>'+rank+' / 5</span></div><p class="talent-detail-desc">'+t[3]+'</p><div class="talent-detail-effect"><small>'+labels[stat]+(target?" · "+targetNames[target]:"")+'</small>'+talentEffectLines(t)+'</div><div class="talent-detail-requirement"><span>Требования</span><b>'+req+'</b></div><div class="talent-detail-actions">'+(down?'<button type="button" class="talent-detail-minus" data-talent-down="'+t[0]+'">−</button>':"")+'<button type="button" class="talent-detail-up" data-talent-up="'+t[0]+'" '+(up?"":"disabled")+'>'+(rank>=5?"Максимум":rank?"Прокачать":"Изучить")+(rank<5?" · +"+next+(stat&&stat.endsWith("_pct")?"%":""):"")+'</button></div></div>'}
+
+/* Путь от выбранного таланта до его требований (для подсветки в дереве) */
+function talentAncestors(code){const seen=new Set();const walk=c=>{if(seen.has(c))return;seen.add(c);const t=talentDef(c);if(!t)return;t[9].forEach(walk)};walk(code);return seen}
+
+/* Масштаб/панорама дерева талантов (pinch-zoom и drag на мобильных и десктопе) */
+const treeT={s:1,x:0,y:0};
+function clampTreeScale(s){return Math.min(2.5,Math.max(.5,s))}
+function applyTreeTransform(){const c=document.querySelector(".talent-flow-canvas");if(c)c.style.transform="translate("+treeT.x+"px,"+treeT.y+"px) scale("+treeT.s+")"}
+function resetTreeTransform(){treeT.s=1;treeT.x=0;treeT.y=0;applyTreeTransform()}
+
 let currentTalentBranch="free_hits",selectedTalentCode=null;
-function renderTalents(){const branches=[{code:"free_hits",name:"Боевая подготовка",desc:"Ветка бесплатных ударов по боссам."},{code:"paid_hits",name:"Арсенал",desc:"Ветка платных ударов по боссам."}],branch=branches.find(b=>b.code===currentTalentBranch)||branches[0],talents=TALENTS.filter(t=>t[1]===branch.code);if(!selectedTalentCode||!talents.some(t=>t[0]===selectedTalentCode))selectedTalentCode=talents[0]?.[0]||null;const maxX=Math.max(0,...talents.map(t=>{const a=talents.filter(x=>x[4]===t[4]);return Math.abs((a.indexOf(t)-(a.length-1)/2)*164)})),graphWidth=Math.max(760,Math.ceil(maxX*2+100+40)),nodePos=new Map;talents.forEach(t=>{const a=talents.filter(x=>x[4]===t[4]),i=a.indexOf(t);nodePos.set(t[0],{x:graphWidth/2+(i-(a.length-1)/2)*164-50,y:28+(t[4]-1)*148})});const edges=talents.flatMap(t=>t[9].map(req=>{const a=nodePos.get(req),b=nodePos.get(t[0]);if(!a||!b)return"";const x1=a.x+50,y1=a.y+100,x2=b.x+50,y2=b.y,mid=(y1+y2)/2,met=talentRank(req)>=5,stroke=met?"#d8d8d2":"rgba(190,190,184,.32)";return '<path d="M'+x1+" "+y1+" L "+x1+" "+mid+" L "+x2+" "+mid+" L "+x2+" "+y2+'" fill="none" stroke="'+stroke+'" stroke-width="'+(met?2:1.35)+'" stroke-linecap="round" stroke-linejoin="round"></path>'})).join(""),nodes=talents.map(t=>{const p=nodePos.get(t[0]),rank=talentRank(t[0]),status=talentNodeStatus(t);return '<button type="button" class="talent-node-game '+status+(t[0]===selectedTalentCode?" selected":"")+'" data-select-talent="'+t[0]+'" style="left:'+p.x+"px;top:"+p.y+'px"><span class="talent-node-art">'+talentNodeIcon(t)+'</span><span class="talent-node-rank">'+rank+'/5</span></button>'}).join("");$("talentFlow").innerHTML='<div class="talent-flow-canvas" style="width:'+graphWidth+'px;height:760px"><svg class="talent-edge-layer" width="'+graphWidth+'" height="760" viewBox="0 0 '+graphWidth+' 760">'+edges+'</svg>'+nodes+'</div>';$("talentSidebar").innerHTML='<div class="talent-side-title"><span>Таланты</span><b>'+spentTalentPoints()+' / '+MAX_TALENT_POINTS+'</b></div><div class="talent-progress"><i style="width:'+Math.min(100,spentTalentPoints()/MAX_TALENT_POINTS*100)+'%"></i></div><div class="talent-side-stats"><div><b>'+Math.max(0,MAX_TALENT_POINTS-spentTalentPoints())+'</b><small>свободно</small></div><div><b>'+spentTalentPoints()+'</b><small>распределено</small></div></div><div class="talent-branch-tabs">'+branches.map(b=>'<button type="button" class="'+(b.code===currentTalentBranch?"active":"")+'" data-talent-branch="'+b.code+'">'+b.name+'</button>').join("")+'</div><div class="talent-branch-description"><b>'+branch.name+'</b><span>'+branch.desc+'</span></div>'+renderTalentDetails(talentDef(selectedTalentCode))+'<button type="button" class="talent-hide" data-close-talents>← Скрыть</button>';$("modalSpentPoints").textContent=spentTalentPoints();$("modalMaxPoints").textContent=MAX_TALENT_POINTS;$("talentPointsBadge").textContent=spentTalentPoints()+" / "+MAX_TALENT_POINTS;$("talentSummary").textContent=spentTalentPoints()?"Распределено "+spentTalentPoints()+" очков":"Очки не распределены"}
-function openTalents(){$("talentModal").classList.add("show");$("talentModal").setAttribute("aria-hidden","false");renderTalents()}
+function renderTalents(){const branches=[{code:"free_hits",name:"Боевая подготовка",desc:"Ветка бесплатных ударов по боссам."},{code:"paid_hits",name:"Арсенал",desc:"Ветка платных ударов по боссам."}],branch=branches.find(b=>b.code===currentTalentBranch)||branches[0],talents=TALENTS.filter(t=>t[1]===branch.code);if(!selectedTalentCode||!talents.some(t=>t[0]===selectedTalentCode))selectedTalentCode=talents[0]?.[0]||null;const pathSet=selectedTalentCode?talentAncestors(selectedTalentCode):new Set();const maxX=Math.max(0,...talents.map(t=>{const a=talents.filter(x=>x[4]===t[4]);return Math.abs((a.indexOf(t)-(a.length-1)/2)*164)})),graphWidth=Math.max(760,Math.ceil(maxX*2+100+40)),nodePos=new Map;talents.forEach(t=>{const a=talents.filter(x=>x[4]===t[4]),i=a.indexOf(t);nodePos.set(t[0],{x:graphWidth/2+(i-(a.length-1)/2)*164-50,y:28+(t[4]-1)*148})});const edges=talents.flatMap(t=>t[9].map(req=>{const a=nodePos.get(req),b=nodePos.get(t[0]);if(!a||!b)return"";const x1=a.x+50,y1=a.y+100,x2=b.x+50,y2=b.y,mid=(y1+y2)/2,met=talentRank(req)>=5,onPath=pathSet.has(t[0]),stroke=onPath?"#54bfff":met?"#d8d8d2":"rgba(190,190,184,.32)",width=onPath?2.6:met?2:1.35;return '<path d="M'+x1+" "+y1+" L "+x1+" "+mid+" L "+x2+" "+mid+" L "+x2+" "+y2+'" fill="none" stroke="'+stroke+'" stroke-width="'+width+'" stroke-linecap="round" stroke-linejoin="round"></path>'})).join(""),nodes=talents.map(t=>{const p=nodePos.get(t[0]),rank=talentRank(t[0]),status=talentNodeStatus(t);return '<button type="button" class="talent-node-game '+status+(t[0]===selectedTalentCode?" selected":"")+(pathSet.has(t[0])?" on-path":"")+'" data-select-talent="'+t[0]+'" style="left:'+p.x+"px;top:"+p.y+'px"><span class="talent-node-art">'+talentNodeIcon(t)+'</span><span class="talent-node-rank">'+rank+'/5</span></button>'}).join("");$("talentFlow").innerHTML='<div class="talent-flow-canvas" style="width:'+graphWidth+'px;height:760px"><svg class="talent-edge-layer" width="'+graphWidth+'" height="760" viewBox="0 0 '+graphWidth+' 760">'+edges+'</svg>'+nodes+'</div>';$("talentSidebar").innerHTML='<div class="talent-side-title"><span>Таланты</span><b>'+spentTalentPoints()+' / '+MAX_TALENT_POINTS+'</b></div><div class="talent-progress"><i style="width:'+Math.min(100,spentTalentPoints()/MAX_TALENT_POINTS*100)+'%"></i></div><div class="talent-side-stats"><div><b>'+Math.max(0,MAX_TALENT_POINTS-spentTalentPoints())+'</b><small>свободно</small></div><div><b>'+spentTalentPoints()+'</b><small>распределено</small></div></div><div class="talent-branch-tabs">'+branches.map(b=>'<button type="button" class="'+(b.code===currentTalentBranch?"active":"")+'" data-talent-branch="'+b.code+'">'+b.name+'</button>').join("")+'</div><div class="talent-branch-description"><b>'+branch.name+'</b><span>'+branch.desc+'</span></div>'+renderTalentDetails(talentDef(selectedTalentCode))+'<button type="button" class="talent-hide" data-close-talents>← Скрыть</button>';$("modalSpentPoints").textContent=spentTalentPoints();$("modalMaxPoints").textContent=MAX_TALENT_POINTS;$("talentPointsBadge").textContent=spentTalentPoints()+" / "+MAX_TALENT_POINTS;$("talentSummary").textContent=spentTalentPoints()?"Распределено "+spentTalentPoints()+" очков":"Очки не распределены";applyTreeTransform()}
+function openTalents(){$("talentModal").classList.add("show");$("talentModal").setAttribute("aria-hidden","false");resetTreeTransform();renderTalents()}
 function closeTalents(){$("talentModal").classList.remove("show");$("talentModal").setAttribute("aria-hidden","true")}
 function totals(){
  const total=Object.fromEntries(keys.map(k=>[k,0]));let critChance=0,critDamage=0,critGaussChance=0,critGrenadeChance=0,critGaussDamage=0,critGrenadeDamage=0,noCooldown=0,cooldown=0;
@@ -59,7 +69,7 @@ function showToast(){const t=$("toast");t.classList.add("show");clearTimeout(win
 document.addEventListener("click",e=>{
  const guide=e.target.closest(".guide-link");if(guide){e.preventDefault();showToast();return}
  const up=e.target.closest("[data-talent-up]");if(up){const t=talentDef(up.dataset.talentUp);if(t&&canUpgrade(t)){state.talents[t[0]]=talentRank(t[0])+1;saveState();render();openTalents()}return}
- const branch=e.target.closest("[data-talent-branch]");if(branch){currentTalentBranch=branch.dataset.talentBranch;selectedTalentCode=null;renderTalents();return} const select=e.target.closest("[data-select-talent]");if(select){selectedTalentCode=select.dataset.selectTalent;renderTalents();return} const down=e.target.closest("[data-talent-down]");if(down){const t=talentDef(down.dataset.talentDown),rank=talentRank(down.dataset.talentDown);if(t&&rank>0&&canDowngrade(t)){state.talents[t[0]]=rank-1;saveState();render();openTalents()}return}
+ const branch=e.target.closest("[data-talent-branch]");if(branch){currentTalentBranch=branch.dataset.talentBranch;selectedTalentCode=null;resetTreeTransform();renderTalents();return} const select=e.target.closest("[data-select-talent]");if(select){selectedTalentCode=select.dataset.selectTalent;renderTalents();return} const down=e.target.closest("[data-talent-down]");if(down){const t=talentDef(down.dataset.talentDown),rank=talentRank(down.dataset.talentDown);if(t&&rank>0&&canDowngrade(t)){state.talents[t[0]]=rank-1;saveState();render();openTalents()}return}
  if(e.target.closest("#openTalents")){openTalents();return}
  if(e.target.closest("[data-close-talents]")){closeTalents();return}
  const b=e.target.closest("[data-remove]");if(b){const s=b.dataset.remove==="set"?state.sets:state.items;s.delete(Number(b.dataset.index));saveState();render()}
@@ -69,5 +79,80 @@ document.addEventListener("change",e=>{const i=e.target;if(!i.matches("[data-typ
 document.addEventListener("click",e=>{const b=e.target.closest("[data-step]");if(!b)return;const input=$(b.dataset.step),dir=Number(b.dataset.dir)||0,min=Number(input.min)||0,max=Number(input.max)||999;input.value=Math.min(max,Math.max(min,(Number(input.value)||0)+dir));saveState();calc()});
 $("selectAllEquipment").addEventListener("change",e=>{state.sets.clear();state.items.clear();if(e.target.checked){SETS.forEach((_,i)=>state.sets.add(i));ITEMS.forEach((_,i)=>state.items.add(i))}saveState();render()});
 $("level").addEventListener("input",()=>{saveState();calc()});
-$("resetAll").onclick=()=>{state.sets.clear();state.items.clear();state.talents={};$("level").value=1;saveState();render()};
+$("resetAll").onclick=()=>{if(!confirm("Точно сбросить весь прогресс — уровень, снаряжение и все очки талантов?"))return;state.sets.clear();state.items.clear();state.talents={};$("level").value=1;saveState();render()};
+
+/* Тултип талантов при наведении */
+document.addEventListener("mouseover",e=>{
+ const node=e.target.closest(".talent-node-game");if(!node)return;
+ const t=talentDef(node.dataset.selectTalent);if(!t)return;
+ const tip=$("talentTooltip"),rank=talentRank(t[0]);
+ tip.innerHTML='<b>'+t[2]+'</b><span class="talent-tooltip-rank">Ранг '+rank+' / 5</span><div class="talent-tooltip-effect">'+talentEffectLines(t)+'</div>';
+ tip.classList.add("show");
+});
+document.addEventListener("mousemove",e=>{
+ const tip=$("talentTooltip");if(!tip.classList.contains("show"))return;
+ const pad=18;let x=e.clientX+pad,y=e.clientY+pad;
+ const maxX=window.innerWidth-280,maxY=window.innerHeight-160;
+ if(x>maxX)x=e.clientX-pad-260;
+ if(y>maxY)y=e.clientY-pad-140;
+ tip.style.left=x+"px";tip.style.top=y+"px";
+});
+document.addEventListener("mouseout",e=>{
+ const node=e.target.closest(".talent-node-game");if(!node)return;
+ const related=e.relatedTarget;if(related&&related.closest&&related.closest(".talent-node-game")===node)return;
+ $("talentTooltip").classList.remove("show");
+});
+
+/* Pinch-zoom и панорамирование дерева талантов (тач) */
+const distTouch=(a,b)=>Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+const midTouch=(a,b)=>({x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2});
+let touchState=null;
+document.addEventListener("touchstart",e=>{
+ const wrap=e.target.closest(".talent-flow-wrap");if(!wrap)return;
+ if(e.touches.length===1)touchState={mode:"pan",lastX:e.touches[0].clientX,lastY:e.touches[0].clientY};
+ else if(e.touches.length===2)touchState={mode:"pinch",lastDist:distTouch(e.touches[0],e.touches[1])};
+},{passive:true});
+document.addEventListener("touchmove",e=>{
+ if(!touchState)return;const wrap=e.target.closest(".talent-flow-wrap");if(!wrap)return;
+ if(touchState.mode==="pan"&&e.touches.length===1){
+  const dx=e.touches[0].clientX-touchState.lastX,dy=e.touches[0].clientY-touchState.lastY;
+  treeT.x+=dx;treeT.y+=dy;touchState.lastX=e.touches[0].clientX;touchState.lastY=e.touches[0].clientY;
+  applyTreeTransform();e.preventDefault();
+ }else if(touchState.mode==="pinch"&&e.touches.length===2){
+  const rect=wrap.getBoundingClientRect(),mid=midTouch(e.touches[0],e.touches[1]),d=distTouch(e.touches[0],e.touches[1]);
+  const canvasX=(mid.x-rect.left-treeT.x)/treeT.s,canvasY=(mid.y-rect.top-treeT.y)/treeT.s;
+  const newScale=clampTreeScale(treeT.s*(d/touchState.lastDist));
+  treeT.x=mid.x-rect.left-canvasX*newScale;treeT.y=mid.y-rect.top-canvasY*newScale;treeT.s=newScale;touchState.lastDist=d;
+  applyTreeTransform();e.preventDefault();
+ }
+},{passive:false});
+document.addEventListener("touchend",e=>{
+ const wrap=e.target.closest(".talent-flow-wrap");
+ if(wrap&&e.touches.length===1)touchState={mode:"pan",lastX:e.touches[0].clientX,lastY:e.touches[0].clientY};
+ else touchState=null;
+});
+
+/* Панорама мышью и зум колесом (десктоп) */
+let dragState=null;
+document.addEventListener("mousedown",e=>{
+ const wrap=e.target.closest(".talent-flow-wrap");if(!wrap||e.target.closest(".talent-node-game"))return;
+ dragState={x:e.clientX,y:e.clientY};wrap.style.cursor="grabbing";
+});
+document.addEventListener("mousemove",e=>{
+ if(!dragState)return;
+ treeT.x+=e.clientX-dragState.x;treeT.y+=e.clientY-dragState.y;dragState={x:e.clientX,y:e.clientY};
+ applyTreeTransform();
+});
+document.addEventListener("mouseup",()=>{if(dragState){dragState=null;const wrap=document.querySelector(".talent-flow-wrap");if(wrap)wrap.style.cursor="grab"}});
+document.addEventListener("wheel",e=>{
+ const wrap=e.target.closest(".talent-flow-wrap");if(!wrap)return;
+ e.preventDefault();const rect=wrap.getBoundingClientRect();
+ if(e.ctrlKey){
+  const canvasX=(e.clientX-rect.left-treeT.x)/treeT.s,canvasY=(e.clientY-rect.top-treeT.y)/treeT.s;
+  const newScale=clampTreeScale(treeT.s*(1-e.deltaY*.01));
+  treeT.x=e.clientX-rect.left-canvasX*newScale;treeT.y=e.clientY-rect.top-canvasY*newScale;treeT.s=newScale;
+ }else{treeT.x-=e.deltaX;treeT.y-=e.deltaY}
+ applyTreeTransform();
+},{passive:false});
+
 loadState();render();
