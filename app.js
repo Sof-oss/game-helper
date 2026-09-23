@@ -1,10 +1,10 @@
 const SETS=[
 {name:"Первый день в зоне",bonuses:{knife:5,pistol:5,auto:5}},
 {name:"Любитель прогулок",bonuses:{grenade:6,gl:11,gauss:36}},
+{name:"Марафонец",bonuses:{knife:9,pistol:10,auto:11}},
+{name:"Полевой",bonuses:{grenade:16,gl:34,gauss:108}},
 {name:"Болотник",bonuses:{knife:14,pistol:14,auto:16}},
 {name:"Омон",bonuses:{grenade:30,gl:62,gauss:198},critGaussChance:.01,critGaussDamage:100},
-{name:"Полевой",bonuses:{grenade:16,gl:34,gauss:108}},
-{name:"Марафонец",bonuses:{knife:9,pistol:10,auto:11}},
 {name:"КХК-01",bonuses:{grenade:41,gl:85,gauss:270},critGaussChance:.01,critGaussDamage:100},
 {name:"Рубеж-М",bonuses:{grenade:50,gl:102,gauss:324},critChance:.02,critDamage:50},
 {name:"Научный сотрудник",bonuses:{knife:18,pistol:19,auto:22}},
