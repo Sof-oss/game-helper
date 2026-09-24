@@ -19,18 +19,20 @@
 <section class="side-section level-section"><div class="side-title"><span class="person-icon" aria-hidden="true"></span><b>Уровень персонажа</b></div><div class="level-row"><button type="button" data-step="level" data-dir="-1">−</button><input id="level" type="number" min="1" max="100" value="1"><button type="button" data-step="level" data-dir="1">+</button></div></section>
 <section class="side-section talent-launcher"><div class="side-title"><span>★</span><b>Таланты</b></div><button type="button" id="openTalents" class="talent-open"><span>✦</span><span>Открыть древо талантов</span><b id="talentPointsBadge">0 / 135</b></button><div class="talent-summary" id="talentSummary">Очки не распределены</div></section>
 <section class="side-section equipment-section"><div class="side-title"><span class="clothes-icon" aria-hidden="true">🧥</span><b>Комплекты</b><button type="button" id="openGearInfo" class="gear-info-btn" aria-label="Бонусы снаряжения" title="Бонусы снаряжения">ℹ</button></div><div id="sets" class="options"></div><div class="items-divider"><span>•</span><b>Одиночные вещи</b></div><div id="items" class="options"></div></section>
-<label class="select-all"><input id="selectAllEquipment" type="checkbox"> <span>Выбрать всё снаряжение</span></label><button class="reset-all" id="resetAll">↻ &nbsp; Сбросить</button>
+<div class="side-actions">
+<label class="select-all"><input id="selectAllEquipment" type="checkbox"> <span>Выбрать всё снаряжение</span></label>
+<button type="button" class="side-btn" id="shareBuild">🔗 &nbsp; Ссылка на билд</button>
+<button type="button" class="side-btn" id="resetAll">↻ &nbsp; Сбросить</button>
+</div>
 </aside>
 <main class="content">
 <div class="result-title"><span class="target-icon">◎</span><h1>Результат расчёта</h1></div>
-<section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (оружие за жетоны)</b><button type="button" id="openTokens" class="tokens-btn">Расчёт по жетонам</button></div><div class="damage-grid">
-<article class="damage-card"><div class="weapon-icon weapon-grenade" aria-hidden="true"></div><div><h3>Граната</h3><strong id="resultGrenade">0</strong></div><div class="breakdown"><span class="breakdown-base">База: <em id="baseGrenade">0</em> &nbsp;&nbsp; + &nbsp; Уровень: <em id="levelGrenade">0</em> &nbsp;&nbsp; + &nbsp; Экипировка: <em id="gearGrenade">0</em> &nbsp;&nbsp; + &nbsp; Таланты: <em class="talent" id="talentOutGrenade">0</em></span><span class="crit-chip"><span class="crit-chip-label">Крит*</span><em id="critGrenade">0%</em><span class="crit-chip-sep">/</span><em id="critGrenadeDamage">0</em></span></div></article><article class="damage-card"><div class="weapon-icon weapon-ubgl" aria-hidden="true"></div><div><h3>Гранатомёт</h3><strong id="resultGl">0</strong></div><div class="breakdown"><span class="breakdown-base">База: <em id="baseGl">0</em> &nbsp;&nbsp; + &nbsp; Уровень: <em id="levelGl">0</em> &nbsp;&nbsp; + &nbsp; Экипировка: <em id="gearGl">0</em> &nbsp;&nbsp; + &nbsp; Таланты: <em class="talent" id="talentOutGl">0</em></span><span class="crit-chip"><span class="crit-chip-label">Крит*</span><em id="critGl">0%</em><span class="crit-chip-sep">/</span><em id="critGlDamage">0</em></span></div></article><article class="damage-card"><div class="weapon-icon weapon-gauss" aria-hidden="true"></div><div><h3>Гаусс</h3><strong id="resultGauss">0</strong></div><div class="breakdown"><span class="breakdown-base">База: <em id="baseGauss">0</em> &nbsp;&nbsp; + &nbsp; Уровень: <em id="levelGauss">0</em> &nbsp;&nbsp; + &nbsp; Экипировка: <em id="gearGauss">0</em> &nbsp;&nbsp; + &nbsp; Таланты: <em class="talent" id="talentOutGauss">0</em></span><span class="crit-chip"><span class="crit-chip-label">Крит*</span><em id="critGauss">0%</em><span class="crit-chip-sep">/</span><em id="critGaussDamageOut">0</em></span></div></article>
-</div><p class="damage-footnote">* Без учёта базового шанса критического удара и базовой прибавки критического урона</p></section>
-<section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (бесплатные удары)</b></div><div class="damage-grid">
-<article class="damage-card"><div class="weapon-icon weapon-knife" aria-hidden="true"></div><div><h3>Нож</h3><strong id="resultKnife">0</strong></div><div class="breakdown"><span class="breakdown-base">База: <em id="baseKnife">0</em> &nbsp;&nbsp; + &nbsp; Уровень: <em id="levelKnife">0</em> &nbsp;&nbsp; + &nbsp; Экипировка: <em id="gearKnife">0</em> &nbsp;&nbsp; + &nbsp; Таланты: <em class="talent" id="talentOutKnife">0</em></span></div></article><article class="damage-card"><div class="weapon-icon weapon-pistol" aria-hidden="true"></div><div><h3>Пистолет</h3><strong id="resultPistol">0</strong></div><div class="breakdown"><span class="breakdown-base">База: <em id="basePistol">0</em> &nbsp;&nbsp; + &nbsp; Уровень: <em id="levelPistol">0</em> &nbsp;&nbsp; + &nbsp; Экипировка: <em id="gearPistol">0</em> &nbsp;&nbsp; + &nbsp; Таланты: <em class="talent" id="talentOutPistol">0</em></span></div></article><article class="damage-card"><div class="weapon-icon weapon-rifle" aria-hidden="true"></div><div><h3>Автомат</h3><strong id="resultAuto">0</strong></div><div class="breakdown"><span class="breakdown-base">База: <em id="baseAuto">0</em> &nbsp;&nbsp; + &nbsp; Уровень: <em id="levelAuto">0</em> &nbsp;&nbsp; + &nbsp; Экипировка: <em id="gearAuto">0</em> &nbsp;&nbsp; + &nbsp; Таланты: <em class="talent" id="talentOutAuto">0</em></span></div></article>
-</div></section>
-<section class="result-panel extra-panel"><div class="section-heading"><span>★</span><b>Дополнительные характеристики</b></div><div class="extra-grid"><div><span>⚔</span><small>Шанс удара без отката</small><strong id="noCooldown">0%</strong></div><div><span>◷</span><small>Сокращение отката</small><strong id="cooldown">0%</strong></div><div><span>✦</span><small>Урон первого бесплатного удара</small><strong id="firstFreeHit">+0%</strong></div></div></section>
-</div>
+<section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (оружие за жетоны)</b><button type="button" id="openTokens" class="tokens-btn">Расчёт по жетонам</button></div><div class="damage-grid" id="paidCards"></div><p class="damage-footnote">* Без учёта базового шанса критического удара и базовой прибавки критического урона</p></section>
+<section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (бесплатные удары)</b></div><div class="damage-grid" id="freeCards"></div></section>
+<section class="result-panel"><div class="section-heading"><span>◷</span><b>Урон за время (бесплатные удары)</b><label class="time-field"><span>Откат между ударами, мин</span><input id="cdMinutes" type="number" min="1" step="1" value="60" inputmode="numeric"></label></div>
+<div class="data-wrap"><table class="data-table"><thead><tr><th>Оружие</th><th>Урон за удар</th><th>Первый удар</th><th>Ударов в час</th><th>Урон в час</th><th>Урон в сутки</th></tr></thead><tbody id="timeBody"></tbody></table></div>
+<p class="damage-footnote">Учтены сокращение отката и шанс удара без отката. Урон в час и в сутки считается по обычному удару, без бонуса первого удара.</p></section>
+<section class="result-panel extra-panel"><div class="section-heading"><span>★</span><b>Дополнительные характеристики</b></div><div class="extra-grid"><div><i class="delta" id="deltaNoCooldown"></i><span>⚔</span><small>Шанс удара без отката</small><strong id="noCooldown">0%</strong></div><div><i class="delta" id="deltaCooldown"></i><span>◷</span><small>Сокращение отката</small><strong id="cooldown">0%</strong></div><div><i class="delta" id="deltaFirstFreeHit"></i><span>✦</span><small>Урон первого бесплатного удара</small><strong id="firstFreeHit">+0%</strong></div></div></section>
 </main></div>
 <div id="talentModal" class="talent-modal" aria-hidden="true">
   <div class="talent-backdrop" data-close-talents></div>
@@ -69,19 +71,19 @@
           <section class="tok-col">
             <label class="tok-field"><span>Количество жетонов</span><input id="tokenCount" type="number" min="0" step="1" value="7200" inputmode="numeric"></label>
             <div class="tok-title">Ожидаемый урон</div>
-            <table class="tok-table"><thead><tr><th>Оружие</th><th>Ударов</th><th>Без крита</th><th class="tok-crit">С критом</th></tr></thead><tbody id="tokenExpected"></tbody></table>
+            <div class="data-wrap"><table class="data-table"><thead><tr><th>Оружие</th><th>Ударов</th><th>Без крита</th><th class="tok-crit">С критом</th></tr></thead><tbody id="tokenExpected"></tbody></table></div>
           </section>
           <section class="tok-col">
             <label class="tok-field"><span>Нужное количество урона</span><input id="tokenTarget" type="number" min="0" step="1" value="1000000" inputmode="numeric"></label>
             <div class="tok-title">Необходимо жетонов</div>
-            <table class="tok-table"><thead><tr><th>Оружие</th><th>Без крита</th><th class="tok-crit">С критом</th></tr></thead><tbody id="tokenNeeded"></tbody></table>
+            <div class="data-wrap"><table class="data-table"><thead><tr><th>Оружие</th><th>Без крита</th><th class="tok-crit">С критом</th></tr></thead><tbody id="tokenNeeded"></tbody></table></div>
           </section>
         </div>
-        <div class="gear-info-group-title">Исходные данные</div>
+        <div class="gear-info-group-title">Исходные данные и эффективность</div>
         <section class="tok-col">
-          <table class="tok-table"><thead><tr><th>Оружие</th><th>Цена, жетонов</th><th>Урон за удар</th><th>Крит (шанс / бонус)</th><th class="tok-crit">Средний урон с критом</th></tr></thead><tbody id="tokenBase"></tbody></table>
+          <div class="data-wrap"><table class="data-table"><thead><tr><th>Оружие</th><th>Цена, жетонов</th><th>Урон за удар</th><th>Крит (шанс / бонус)</th><th class="tok-crit">Средний урон с критом</th><th>Урон на жетон</th><th>На жетон с критом</th></tr></thead><tbody id="tokenBase"></tbody></table></div>
         </section>
-        <p class="tok-note">Цена за удар: граната — 3, гранатомёт — 5, гаусс — 15 жетонов. Средний урон с критом = урон + шанс крита × бонус крита. Количество ударов целое: жетоны считаются на целые удары. Крит считается без учёта базового шанса критического удара и базовой прибавки критического урона.</p>
+        <p class="tok-note">Цена за удар: граната — 3, гранатомёт — 5, гаусс — 15 жетонов. Средний урон с критом = урон + шанс крита × бонус крита. Количество ударов целое: жетоны считаются на целые удары. Крит считается без учёта базового шанса критического удара и базовой прибавки критического урона. ★ — самое выгодное оружие по урону на один жетон.</p>
       </div>
     </div>
   </section>
