@@ -135,8 +135,8 @@ function closeGearInfo(){$("gearInfoModal").classList.remove("show");$("gearInfo
 /* Расчёт по жетонам: сколько урона даёт запас жетонов, сколько жетонов нужно на заданный урон и что выгоднее */
 const TOKEN_PRICES={grenade:3,gl:5,gauss:15},TOKEN_KEY="gameHelperTokens",TOKEN_WEAPONS=[["grenade","Граната"],["gl","Гранатомёт"],["gauss","Гаусс"]],TOKEN_CRIT={grenade:["critGrenade","critDmgGrenade"],gl:["critGl","critDmgGl"],gauss:["critGauss","critDmgGauss"]};
 const tokenInt=id=>Math.max(0,Math.floor(Number($(id).value)||0));
-function saveTokens(){try{localStorage.setItem(TOKEN_KEY,JSON.stringify({count:$("tokenCount").value,target:$("tokenTarget").value,cd:$("cdMinutes").value}))}catch{}}
-function loadTokens(){try{const d=JSON.parse(localStorage.getItem(TOKEN_KEY)||"null");if(!d)return;if(d.count!==undefined)$("tokenCount").value=d.count;if(d.target!==undefined)$("tokenTarget").value=d.target;if(d.cd!==undefined)$("cdMinutes").value=d.cd}catch{}}
+function saveTokens(){try{localStorage.setItem(TOKEN_KEY,JSON.stringify({count:$("tokenCount").value,target:$("tokenTarget").value}))}catch{}}
+function loadTokens(){try{const d=JSON.parse(localStorage.getItem(TOKEN_KEY)||"null");if(!d)return;if(d.count!==undefined)$("tokenCount").value=d.count;if(d.target!==undefined)$("tokenTarget").value=d.target}catch{}}
 /* Урон за удар и ожидаемый урон с учётом крита: урон + шанс × бонус крита */
 function tokenWeaponStats(){
  const r=results();
@@ -152,13 +152,6 @@ function renderTokens(){
 }
 function openTokens(){$("tokensModal").classList.add("show");$("tokensModal").setAttribute("aria-hidden","false");renderTokens()}
 function closeTokens(){$("tokensModal").classList.remove("show");$("tokensModal").setAttribute("aria-hidden","true")}
-
-/* Урон бесплатных ударов за время. Среднее ожидание между ударами = откат × (1 − сокращение) × (1 − шанс удара без отката) */
-const FREE_WEAPONS=[["knife","Нож"],["pistol","Пистолет"],["auto","Автомат"]];
-function renderTime(){
- const r=results(),cd=Math.max(0,Number($("cdMinutes").value)||0),wait=cd*(1-Math.min(1,r.cooldown))*(1-Math.min(1,r.noCooldown)),perHour=wait>0?60/wait:null;
- $("timeBody").innerHTML=FREE_WEAPONS.map(([k,name])=>{const d=r[k];return '<tr><td>'+name+'</td><td>'+fmt(d)+'</td><td>'+fmt(d*(1+r.firstFreeHit))+'</td><td>'+(perHour===null?"—":fmtD(perHour))+'</td><td>'+(perHour===null?"—":fmt(d*perHour))+'</td><td>'+(perHour===null?"—":fmt(d*perHour*24))+'</td></tr>'}).join("");
-}
 
 /* Карточки урона */
 const CARDS={paid:[["grenade","Граната","grenade"],["gl","Гранатомёт","ubgl"],["gauss","Гаусс","gauss"]],free:[["knife","Нож","knife"],["pistol","Пистолет","pistol"],["auto","Автомат","rifle"]]};
@@ -180,7 +173,7 @@ function calc(){
   keys.forEach(k=>pulse("delta"+cap(k),r[k]-prevResults[k]));
   pulse("deltaNoCooldown",r.noCooldown-prevResults.noCooldown,true);pulse("deltaCooldown",r.cooldown-prevResults.cooldown,true);pulse("deltaFirstFreeHit",r.firstFreeHit-prevResults.firstFreeHit,true);
  }
- prevResults=r;renderTime();
+ prevResults=r;
 }
 function render(){$("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");$("selectAllEquipment").checked=state.sets.size===SETS.length&&state.items.size===ITEMS.length;renderTalents();calc()}
 function showToast(text){const t=$("toast");t.textContent=text||"В разработке";t.classList.add("show");clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
@@ -278,7 +271,6 @@ document.addEventListener("wheel",e=>{
 },{passive:false});
 
 ["tokenCount","tokenTarget"].forEach(id=>$(id).addEventListener("input",()=>{saveTokens();renderTokens()}));
-$("cdMinutes").addEventListener("input",()=>{saveTokens();renderTime()});
 renderCards();loadState();loadTokens();
 const openedFromLink=applyHash();
 render();

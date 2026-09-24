@@ -29,9 +29,6 @@
 <div class="result-title"><span class="target-icon">◎</span><h1>Результат расчёта</h1></div>
 <section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (оружие за жетоны)</b><button type="button" id="openTokens" class="tokens-btn">Расчёт по жетонам</button></div><div class="damage-grid" id="paidCards"></div><p class="damage-footnote">* Без учёта базового шанса критического удара и базовой прибавки критического урона</p></section>
 <section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (бесплатные удары)</b></div><div class="damage-grid" id="freeCards"></div></section>
-<section class="result-panel"><div class="section-heading"><span>◷</span><b>Урон за время (бесплатные удары)</b><label class="time-field"><span>Откат между ударами, мин</span><input id="cdMinutes" type="number" min="1" step="1" value="60" inputmode="numeric"></label></div>
-<div class="data-wrap"><table class="data-table"><thead><tr><th>Оружие</th><th>Урон за удар</th><th>Первый удар</th><th>Ударов в час</th><th>Урон в час</th><th>Урон в сутки</th></tr></thead><tbody id="timeBody"></tbody></table></div>
-<p class="damage-footnote">Учтены сокращение отката и шанс удара без отката. Урон в час и в сутки считается по обычному удару, без бонуса первого удара.</p></section>
 <section class="result-panel extra-panel"><div class="section-heading"><span>★</span><b>Дополнительные характеристики</b></div><div class="extra-grid"><div><i class="delta" id="deltaNoCooldown"></i><span>⚔</span><small>Шанс удара без отката</small><strong id="noCooldown">0%</strong></div><div><i class="delta" id="deltaCooldown"></i><span>◷</span><small>Сокращение отката</small><strong id="cooldown">0%</strong></div><div><i class="delta" id="deltaFirstFreeHit"></i><span>✦</span><small>Урон первого бесплатного удара</small><strong id="firstFreeHit">+0%</strong></div></div></section>
 </main></div>
 <div id="talentModal" class="talent-modal" aria-hidden="true">
