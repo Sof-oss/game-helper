@@ -325,6 +325,15 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
 .tok-title{font-size:12px;color:#7c93a6;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
 .tok-note{color:#71889b;font-size:11px;line-height:1.5}
 
+/* ===== Подпись автора =====
+   Тот же рукописный шрифт (Caveat) и лёгкий наклон, что и в исходном
+   экспортируемом изображении (html_progress-tables.html, ctx.font =
+   "12px 'Caveat', cursive"), только перекрашено под акцентный синий
+   сайта вместо зелёного — чтобы подпись не выглядела чужеродной вставкой
+   среди остальной палитры интерфейса. */
+.site-footer{padding:16px 0 26px;text-align:center}
+.site-footer span{display:inline-block;font-family:"Caveat","Segoe UI",cursive;font-size:22px;font-weight:600;color:#6fc3ff;transform:skewX(-8deg);text-shadow:0 0 10px rgba(84,191,255,.35)}
+
 /* ===== Средние экраны ===== */
 @media(max-width:1050px){
   .header-inner{gap:15px}

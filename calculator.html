@@ -16,6 +16,10 @@
 <meta property="og:locale" content="ru_RU">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<!-- Шрифт подписи автора внизу страницы (см. .site-footer в styles.css) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -105,4 +109,9 @@
   </section>
 </div>
 <div id="toast" class="toast" role="status" aria-live="polite">В разработке</div>
+
+<!-- Подпись автора — единственное место сайта, отмеченное личным именем, поэтому
+     оставляем её ненавязчивой и внизу каждой страницы, а не только на главной -->
+<footer class="site-footer"><span>© by Sof</span></footer>
+
 <script src="talents.js"></script><script src="app.js"></script></body></html>
