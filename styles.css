@@ -72,6 +72,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 .result-title{display:flex;align-items:center;gap:14px;padding:4px 15px 13px}
 .result-title h1{margin:0;font-size:31px;letter-spacing:-.6px;color:#e4eef8}
 .target-icon{font-size:39px;color:#dce9f5}
+svg.target-icon{width:39px;height:39px;flex:0 0 39px}
 .result-panel{border:1px solid #142b3b;border-radius:9px;background:linear-gradient(180deg,rgba(7,19,29,.94),rgba(5,15,23,.96));padding:12px 14px;margin-bottom:12px;box-shadow:0 10px 25px #0005}
 .section-heading{display:flex;align-items:center;gap:10px;font-size:16px;color:#cbd9e5;margin-bottom:9px}
 .section-heading span{font-size:21px;color:#e5eef7}
@@ -143,9 +144,6 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 @keyframes radarPulse{0%,100%{opacity:.35;transform:scale(.75)}50%{opacity:1;transform:scale(1.2)}}
 .home-hero h1{margin:0 0 14px;font-size:42px;letter-spacing:-.6px;color:#e4eef8;text-shadow:0 0 22px rgba(90,174,255,.25)}
 .home-hero p{margin:0 auto;max-width:620px;color:#9fb1c0;font-size:14px;line-height:1.65}
-.home-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:26px}
-.home-stat{display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid #1a3346;border-radius:7px;background:linear-gradient(135deg,#0b1925,#09141e);color:#9fb1c0;font-size:12px;font-variant-numeric:tabular-nums}
-.home-stat b{color:#dce7f0;font-weight:700}
 .home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 /* Акцентный цвет карточки задаётся инлайново (--accent/--accent-bg/--accent-border),
    чтобы не плодить по три модификатора класса на каждую карточку */
@@ -353,7 +351,6 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
   .home-hero::before{font-size:140px;top:-30px}
   .home-eyebrow{font-size:10px;padding:5px 11px}
   .home-hero h1{font-size:26px}
-  .home-stats{gap:8px;margin-top:20px}
   .home-card-body{padding:18px 16px 16px}
   .home-grid{grid-template-columns:1fr}
 }
