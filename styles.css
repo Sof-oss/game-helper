@@ -9,19 +9,18 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 .header-inner{height:100%;display:flex;align-items:center;padding:0 28px;gap:50px}
 .logo{width:315px;display:flex;align-items:center;gap:12px}
 .rad-logo{width:42px;height:50px;display:grid;place-items:center;font-size:38px;color:#eaf3fc;filter:drop-shadow(0 0 6px #5aaeff);line-height:1}
-.logo-title{font-family:"Oswald","Segoe UI",Arial,sans-serif;font-size:27px;font-weight:700;letter-spacing:3px;text-transform:uppercase;line-height:1;color:#edf5ff;text-shadow:0 0 10px rgba(90,174,255,.45),1px 1px 0 #04090e}
+@font-face{font-family:"Graffiti1C";src:url("assets/fonts/graffiti-stalker.woff") format("woff"),url("assets/fonts/graffiti-stalker.ttf") format("truetype");font-weight:normal;font-style:normal;font-display:swap}
+.logo-title{font-family:"Graffiti1C","Segoe UI",Arial,sans-serif;font-size:29px;font-weight:400;letter-spacing:.5px;line-height:1;color:#edf5ff;text-shadow:1px 1px 0 #04090e,0 0 12px rgba(90,174,255,.4)}
 .main-nav{height:100%;display:flex;align-items:center;gap:14px}
 .main-nav a{height:100%;padding:0 17px;display:flex;align-items:center;gap:12px;color:#9fb1c0;text-decoration:none;font-weight:600;position:relative;white-space:nowrap}
 .main-nav a:focus-visible{outline-offset:-2px;border-radius:4px}
 .main-nav a span{font-size:22px;color:#a9bed1}
-.main-nav .guide-link span{font-size:16px;line-height:1}
 .main-nav a.active{color:#dcecff}
 .main-nav a.active:after{content:"";position:absolute;bottom:15px;left:10px;right:10px;height:4px;border-radius:4px;background:#4aa8ff;box-shadow:0 0 8px #238cff}
 
 /* ===== Вкладки сайта =====
    Каждый раздел (Калькулятор, Информация) — это .view; активен тот,
    у которого нет атрибута hidden. Переключение — в app.js (switchView). */
-.view[hidden]{display:none}
 
 /* ===== Раскладка ===== */
 .page{display:grid;grid-template-columns:330px minmax(0,1fr);gap:4px;min-height:calc(100vh - 92px);padding:4px;align-items:start}
@@ -32,9 +31,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 .side-section{padding:10px 14px 12px;border-bottom:1px solid #142735}
 .side-title{display:flex;align-items:center;gap:10px;font-size:14px;color:#cbd9e5;margin-bottom:8px}
 .side-title span{font-size:20px;color:#dbe9f6;width:18px;text-align:center}
-.side-title .person-icon{position:relative;width:18px;height:18px;display:inline-block;flex:0 0 18px}
-.side-title .person-icon::before{content:"";position:absolute;top:1px;left:6px;width:6px;height:6px;border:2px solid currentColor;border-radius:50%}
-.side-title .person-icon::after{content:"";position:absolute;left:3px;bottom:1px;width:12px;height:8px;border:2px solid currentColor;border-radius:7px 7px 3px 3px}
+.side-title .person-icon{width:18px;height:18px;flex:0 0 18px;fill:currentColor;color:#dbe9f6}
 .side-title .clothes-icon{font-size:16px;line-height:18px;width:18px;height:18px;display:inline-block;filter:grayscale(1)}
 
 .level-row{display:grid;grid-template-columns:34px 1fr 34px;gap:6px}
@@ -135,6 +132,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 /* ===== Вкладка «Информация» ===== */
 .info-content{max-width:1400px;margin:0 auto;padding:15px 20px 24px}
 .info-lead{margin:0 2px 14px;color:#8196a9;font-size:12px;line-height:1.5}
+.placeholder-panel{padding:32px 16px;text-align:center;color:#8196a9;font-size:14px}
 .info-groups{display:grid;grid-template-columns:2.3fr 1fr 1fr;gap:16px;align-items:start}
 
 /* Общая карточка блока — базовое оформление, у каждого блока свой акцентный
@@ -338,7 +336,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
   .header-inner{padding:8px 10px;gap:8px}
   .logo{gap:8px}
   .rad-logo{width:32px;height:38px;font-size:28px}
-  .logo-title{font-size:19px;letter-spacing:1.5px}
+  .logo-title{font-size:19px;letter-spacing:.3px}
   .main-nav a{padding:0 8px;font-size:11px;gap:6px}
   .main-nav a span{font-size:17px}
   .result-title{padding:4px 8px 10px;gap:8px}

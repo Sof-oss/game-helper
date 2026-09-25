@@ -178,47 +178,6 @@ function calc(){
 function render(){$("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");$("selectAllEquipment").checked=state.sets.size===SETS.length&&state.items.size===ITEMS.length;renderTalents();calc()}
 function showToast(text){const t=$("toast");t.textContent=text||"В разработке";t.classList.add("show");clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
 
-/* ===== Вкладки сайта (Информация / Калькулятор / Гайды) ===== */
-let infoRendered=false;
-function switchView(view){
- document.querySelectorAll(".main-nav a[data-view]").forEach(a=>a.classList.toggle("active",a.dataset.view===view));
- document.querySelectorAll(".view").forEach(v=>{v.hidden=v.dataset.view!==view});
- if(view==="info"&&!infoRendered){renderInfo();infoRendered=true}
-}
-
-/* Разбивает массив строк на n колонок бок о бок (последняя может быть короче) —
-   тот же приём, что и в исходных экспортируемых таблицах, чтобы длинный список
-   талантов (135 строк) не растягивал страницу в один узкий столбец. */
-function chunkRows(rows,n){
- if(n<=1)return[rows];
- const size=Math.ceil(rows.length/n),chunks=[];
- for(let i=0;i<n;i++)chunks.push(rows.slice(i*size,(i+1)*size));
- return chunks;
-}
-const INFO_MILESTONE_STEP=10;
-/* Цвет заметки под таблицей ПДА подбирается по её тексту — так же, как в
-   исходном экспортируемом изображении (см. html_progress-tables.html):
-   новичок — зелёный (цвет секции), ветеран — оранжевый, учёный — бирюзовый.
-   Так заметки визуально совпадают с исходником, а не идут одним серым цветом. */
-function infoNoteColor(note){
- if(note.includes("ветерана"))return"#ffb74d";
- if(note.includes("ученого")||note.includes("учёного"))return"#26c6da";
- return"#6fcf97";
-}
-function infoTableMarkup(rows,headers){
- return '<table class="data-table info-table"><thead><tr>'+headers.map(h=>'<th>'+h+'</th>').join("")+'</tr></thead><tbody>'+rows.map(([lvl,step,totalSum])=>'<tr'+(lvl%INFO_MILESTONE_STEP===0?' class="info-milestone"':"")+'><td>'+lvl+'</td><td>'+fmt(step)+'</td><td>'+fmt(totalSum)+'</td></tr>').join("")+'</tbody></table>';
-}
-function infoGroupMarkup(title,ledColor,body,notes,modClass){
- return '<div class="info-group'+(modClass?" info-group-"+modClass:"")+'"><div class="info-group-title"><i class="info-led" style="--led:'+ledColor+'"></i><b>'+title+'</b></div>'+body+(notes&&notes.length?'<ul class="info-notes">'+notes.map(n=>'<li style="color:'+infoNoteColor(n)+'">'+n+'</li>').join("")+'</ul>':"")+'</div>';
-}
-function renderInfo(){
- const talentChunks=chunkRows(TALENT_LEVELS,3).map(rows=>infoTableMarkup(rows,["Уровень","Урон","Всего"])).join("");
- $("infoGroups").innerHTML=
-  infoGroupMarkup("Таланты","#ffb74d",'<div class="info-subcols">'+talentChunks+'</div>',null,"talents")+
-  infoGroupMarkup("Опыт ПДА","#9fdc9f",infoTableMarkup(PDA_LEVELS,["Уровень","Опыт","Всего"]),PDA_LEVEL_NOTES,"pda")+
-  infoGroupMarkup("Опыт персонажа","#54bfff",infoTableMarkup(CHAR_LEVELS,["Уровень","Опыт","Всего"]),null,"char");
-}
-
 /* Ссылка на билд: уровень, снаряжение и таланты в адресе после # */
 const toBits=s=>[...s].reduce((a,i)=>a|1<<i,0);
 function buildHash(){const p=new URLSearchParams();p.set("l",String(Math.max(1,Math.min(100,num("level")))));p.set("s",String(toBits(state.sets)));p.set("i",String(toBits(state.items)));p.set("t",TALENTS.map(t=>talentRank(t[0])).join(""));return p.toString()}
@@ -237,8 +196,6 @@ function copyText(s){return navigator.clipboard&&window.isSecureContext?navigato
 function shareBuild(){copyText(location.href.split("#")[0]+"#"+buildHash()).then(ok=>showToast(ok?"Ссылка скопирована":"Не удалось скопировать"))}
 
 document.addEventListener("click",e=>{
- const guide=e.target.closest(".guide-link");if(guide){e.preventDefault();showToast();return}
- const navView=e.target.closest(".main-nav a[data-view]");if(navView){e.preventDefault();switchView(navView.dataset.view);return}
  const closeDetail=e.target.closest("[data-close-talent-detail]");if(closeDetail){talentDetailOpen=false;renderTalents();return}
  const up=e.target.closest("[data-talent-up]");if(up){changeTalent(up.dataset.talentUp,1);return}
  const branch=e.target.closest("[data-talent-branch]");if(branch){currentTalentBranch=branch.dataset.talentBranch;selectedTalentCode=null;talentDetailOpen=false;renderTalents();resetTreeTransform();return}
@@ -316,5 +273,4 @@ document.addEventListener("wheel",e=>{
 renderCards();loadState();loadTokens();
 const openedFromLink=applyHash();
 render();
-switchView(openedFromLink?"calc":(document.querySelector('.main-nav a.active')?.dataset.view||"calc"));
 if(openedFromLink)showToast("Открыт билд по ссылке");
