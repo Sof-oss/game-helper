@@ -331,8 +331,8 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
    "12px 'Caveat', cursive"), только перекрашено под акцентный синий
    сайта вместо зелёного — чтобы подпись не выглядела чужеродной вставкой
    среди остальной палитры интерфейса. */
-.site-footer{padding:16px 0 26px;text-align:center}
-.site-footer span{display:inline-block;font-family:"Caveat","Segoe UI",cursive;font-size:22px;font-weight:600;color:#6fc3ff;transform:skewX(-8deg);text-shadow:0 0 10px rgba(84,191,255,.35)}
+.site-footer{padding:8px 0 12px;text-align:center;flex:0 0 auto}
+.site-footer span{display:inline-block;font-family:"Caveat","Segoe UI",cursive;font-size:12px;font-weight:400;line-height:1;color:#789078;transform:skewX(-8deg);text-shadow:none;opacity:.55}
 
 /* ===== Средние экраны ===== */
 @media(max-width:1050px){
