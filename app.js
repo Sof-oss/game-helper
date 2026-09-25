@@ -178,7 +178,7 @@ function calc(){
 function render(){$("sets").innerHTML=optionMarkup(SETS,state.sets,"set");$("items").innerHTML=optionMarkup(ITEMS,state.items,"item");$("selectAllEquipment").checked=state.sets.size===SETS.length&&state.items.size===ITEMS.length;renderTalents();calc()}
 function showToast(text){const t=$("toast");t.textContent=text||"В разработке";t.classList.add("show");clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
 
-/* ===== Вкладки сайта (Калькулятор / Информация / Гайды) ===== */
+/* ===== Вкладки сайта (Информация / Калькулятор / Гайды) ===== */
 let infoRendered=false;
 function switchView(view){
  document.querySelectorAll(".main-nav a[data-view]").forEach(a=>a.classList.toggle("active",a.dataset.view===view));
@@ -196,11 +196,20 @@ function chunkRows(rows,n){
  return chunks;
 }
 const INFO_MILESTONE_STEP=10;
+/* Цвет заметки под таблицей ПДА подбирается по её тексту — так же, как в
+   исходном экспортируемом изображении (см. html_progress-tables.html):
+   новичок — зелёный (цвет секции), ветеран — оранжевый, учёный — бирюзовый.
+   Так заметки визуально совпадают с исходником, а не идут одним серым цветом. */
+function infoNoteColor(note){
+ if(note.includes("ветерана"))return"#ffb74d";
+ if(note.includes("ученого")||note.includes("учёного"))return"#26c6da";
+ return"#6fcf97";
+}
 function infoTableMarkup(rows,headers){
  return '<table class="data-table info-table"><thead><tr>'+headers.map(h=>'<th>'+h+'</th>').join("")+'</tr></thead><tbody>'+rows.map(([lvl,step,totalSum])=>'<tr'+(lvl%INFO_MILESTONE_STEP===0?' class="info-milestone"':"")+'><td>'+lvl+'</td><td>'+fmt(step)+'</td><td>'+fmt(totalSum)+'</td></tr>').join("")+'</tbody></table>';
 }
 function infoGroupMarkup(title,ledColor,body,notes){
- return '<div class="info-group"><div class="info-group-title"><i class="info-led" style="--led:'+ledColor+'"></i><b>'+title+'</b></div>'+body+(notes&&notes.length?'<ul class="info-notes">'+notes.map(n=>'<li>'+n+'</li>').join("")+'</ul>':"")+'</div>';
+ return '<div class="info-group"><div class="info-group-title"><i class="info-led" style="--led:'+ledColor+'"></i><b>'+title+'</b></div>'+body+(notes&&notes.length?'<ul class="info-notes">'+notes.map(n=>'<li style="color:'+infoNoteColor(n)+'">'+n+'</li>').join("")+'</ul>':"")+'</div>';
 }
 function renderInfo(){
  const talentChunks=chunkRows(TALENT_LEVELS,3).map(rows=>infoTableMarkup(rows,["Ур.","Урон","Всего"])).join("");
@@ -307,4 +316,5 @@ document.addEventListener("wheel",e=>{
 renderCards();loadState();loadTokens();
 const openedFromLink=applyHash();
 render();
+switchView(openedFromLink?"calc":(document.querySelector('.main-nav a.active')?.dataset.view||"info"));
 if(openedFromLink)showToast("Открыт билд по ссылке");

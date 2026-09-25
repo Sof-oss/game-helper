@@ -140,11 +140,19 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 .info-group-title{display:flex;align-items:center;gap:9px;font-size:15px;color:#dce7f0;margin-bottom:11px}
 .info-led{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:var(--led,#54bfff);box-shadow:0 0 8px var(--led,#54bfff)}
 .info-subcols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.info-table td,.info-table th{padding:5px 7px;font-size:12px}
-.info-milestone td{background:rgba(240,174,88,.08);color:#f6d9ad;font-weight:700}
-.info-milestone td:first-child{color:#f0ae58}
-.info-notes{margin:12px 0 0;padding-left:18px;color:#8196a9;font-size:11px;line-height:1.6}
-.info-notes li{margin-bottom:2px}
+
+/* Таблицы «Информация» — усиленная читаемость: моноширинные цифры,
+   более контрастная зебра и явные разделители между колонками
+   ("Ур." / "Урон" / "Всего"), как в исходном экспортируемом изображении
+   (html_progress-tables.html), где числа не сливались друг с другом. */
+.info-table{font-family:"Consolas","IBM Plex Mono",ui-monospace,monospace;table-layout:fixed}
+.info-table th{padding:6px 6px 8px;font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;border-bottom:1px solid #23475f}
+.info-table td{padding:5px 6px;font-size:12px;border-top:1px solid #12222f}
+.info-table tbody tr:nth-child(even):not(.info-milestone) td{background:rgba(159,220,159,.045)}
+.info-milestone td{background:rgba(255,183,77,.14);color:#ffdca8;font-weight:700;border-top-color:rgba(255,183,77,.3);border-bottom:1px solid rgba(255,183,77,.3)}
+.info-milestone td:first-child{color:#ffb74d}
+.info-notes{margin:12px 0 0;padding-left:18px;font-size:11.5px;line-height:1.7;list-style:disc}
+.info-notes li{margin-bottom:2px;font-weight:600}
 
 /* ===== Уведомление ===== */
 .toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-45%) scale(.96);min-width:320px;padding:26px 38px 28px;border:2px solid #566b76;border-radius:4px;background:linear-gradient(180deg,#18252a 0%,#0a1114 100%);color:#d9e1df;text-align:center;font-size:24px;font-weight:700;letter-spacing:1px;text-transform:uppercase;box-shadow:0 0 0 1px #080c0e,0 16px 55px #000c,inset 0 0 35px #0008;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:3000}

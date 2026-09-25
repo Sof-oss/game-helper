@@ -23,14 +23,25 @@
   <div class="header-inner">
     <div class="logo"><div class="rad-logo">☢</div><div class="logo-copy"><div class="logo-title">Сердце зоны</div></div></div>
     <nav class="main-nav">
-      <a class="active" href="#" data-view="calc"><span>⚔</span>Калькулятор урона</a>
-      <a href="#" data-view="info"><span>📊</span>Информация</a>
+      <a class="active" href="#" data-view="info"><span>📊</span>Информация</a>
+      <a href="#" data-view="calc"><span>⚔</span>Калькулятор урона</a>
       <a class="guide-link" href="#"><span>📖</span>Гайды</a>
     </nav>
   </div>
 </header>
 
-<div class="view" id="viewCalc" data-view="calc">
+<div class="view" id="viewInfo" data-view="info">
+<main class="content info-content">
+<div class="result-title"><span class="target-icon">📊</span><h1>Информация</h1></div>
+<section class="result-panel">
+  <div class="section-heading"><span>★</span><b>Прогресс по уровням</b></div>
+  <p class="info-lead">Стоимость улучшения таланта на уровень, опыт ПДА и опыт персонажа по уровням, с накопительным итогом.</p>
+  <div class="info-groups" id="infoGroups"></div>
+</section>
+</main>
+</div>
+
+<div class="view" id="viewCalc" data-view="calc" hidden>
 <div class="page">
 <aside class="sidebar">
 <section class="side-section level-section"><div class="side-title"><span class="person-icon" aria-hidden="true"></span><b>Уровень персонажа</b></div><div class="level-row"><button type="button" data-step="level" data-dir="-1">−</button><input id="level" type="number" min="1" max="100" value="1"><button type="button" data-step="level" data-dir="1">+</button></div></section>
@@ -48,17 +59,6 @@
 <section class="result-panel"><div class="section-heading"><span>⚔</span><b>Урон (бесплатные удары)</b></div><div class="damage-grid" id="freeCards"></div></section>
 <section class="result-panel extra-panel"><div class="section-heading"><span>★</span><b>Дополнительные характеристики</b></div><div class="extra-grid"><div><i class="delta" id="deltaNoCooldown"></i><span>⚔</span><small>Шанс удара без отката</small><strong id="noCooldown">0%</strong></div><div><i class="delta" id="deltaCooldown"></i><span>◷</span><small>Сокращение отката</small><strong id="cooldown">0%</strong></div><div><i class="delta" id="deltaFirstFreeHit"></i><span>✦</span><small>Урон первого бесплатного удара</small><strong id="firstFreeHit">+0%</strong></div></div></section>
 </main></div>
-</div>
-
-<div class="view" id="viewInfo" data-view="info" hidden>
-<main class="content info-content">
-<div class="result-title"><span class="target-icon">📊</span><h1>Информация</h1></div>
-<section class="result-panel">
-  <div class="section-heading"><span>★</span><b>Прогресс по уровням</b></div>
-  <p class="info-lead">Стоимость улучшения таланта на уровень, опыт ПДА и опыт персонажа по уровням, с накопительным итогом.</p>
-  <div class="info-groups" id="infoGroups"></div>
-</section>
-</main>
 </div>
 
 <div id="talentModal" class="talent-modal" aria-hidden="true">
