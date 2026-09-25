@@ -1,6 +1,6 @@
 /* ===== Основа ===== */
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#060d13;color:#dce7f2;font-family:"Segoe UI",Arial,sans-serif;overflow-x:hidden}
+html,body{margin:0;min-height:100%;background:#060d13;color:#dce7f2;font-family:"Segoe UI",Arial,sans-serif;overflow-x:hidden}body{min-height:100vh;display:flex;flex-direction:column}
 body{background-color:#060d13;background-image:linear-gradient(180deg,rgba(6,13,19,0) 0%,rgba(6,13,19,.42) 42%,rgba(6,13,19,.9) 64%,#060d13 80%),radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 35%),url("assets/bg-zone.jpg");background-position:0 0,0 0,center top;background-size:auto,auto,100% auto;background-repeat:no-repeat;font-size:14px}
 :where(button,input,a):focus-visible{outline:2px solid #54bfff;outline-offset:2px}
 
@@ -138,7 +138,7 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
    Раньше это была просто плашка с тремя ссылками. Добавили "датчик" сверху
    (пульсирующая точка, как индикатор ПДА), крупный вотермарк-радиацию за
    заголовком и статы, чтобы страница не выглядела заглушкой. */
-.home-content{max-width:1040px;margin:0 auto;padding:56px 20px 44px}
+.home-content{max-width:1040px;margin:0 auto;padding:56px 20px 44px;flex:1}
 .home-hero{position:relative;text-align:center;margin-bottom:42px;padding:8px 0 4px;isolation:isolate}
 .home-hero::before{content:"☢";position:absolute;top:-52px;left:50%;transform:translateX(-50%);font-size:230px;line-height:1;color:#123047;opacity:.22;pointer-events:none;z-index:-1}
 .home-eyebrow{position:relative;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid #24506e;border-radius:20px;background:rgba(15,34,51,.65);color:#6fc3ff;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;margin-bottom:20px}
@@ -163,7 +163,7 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
 .home-card:hover .home-card-cta svg{transform:translateX(3px)}
 
 /* ===== Вкладка «Информация» ===== */
-.info-content{max-width:1400px;margin:0 auto;padding:15px 20px 24px}
+.info-content{max-width:1400px;margin:0 auto;padding:15px 20px 24px;flex:1}
 .info-lead{margin:0 2px 14px;color:#8196a9;font-size:12px;line-height:1.5}
 .placeholder-panel{padding:32px 16px;text-align:center;color:#8196a9;font-size:14px}
 .info-groups{display:grid;grid-template-columns:2.3fr 1fr 1fr;gap:16px;align-items:start}
