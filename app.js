@@ -208,15 +208,15 @@ function infoNoteColor(note){
 function infoTableMarkup(rows,headers){
  return '<table class="data-table info-table"><thead><tr>'+headers.map(h=>'<th>'+h+'</th>').join("")+'</tr></thead><tbody>'+rows.map(([lvl,step,totalSum])=>'<tr'+(lvl%INFO_MILESTONE_STEP===0?' class="info-milestone"':"")+'><td>'+lvl+'</td><td>'+fmt(step)+'</td><td>'+fmt(totalSum)+'</td></tr>').join("")+'</tbody></table>';
 }
-function infoGroupMarkup(title,ledColor,body,notes){
- return '<div class="info-group"><div class="info-group-title"><i class="info-led" style="--led:'+ledColor+'"></i><b>'+title+'</b></div>'+body+(notes&&notes.length?'<ul class="info-notes">'+notes.map(n=>'<li style="color:'+infoNoteColor(n)+'">'+n+'</li>').join("")+'</ul>':"")+'</div>';
+function infoGroupMarkup(title,ledColor,body,notes,modClass){
+ return '<div class="info-group'+(modClass?" info-group-"+modClass:"")+'"><div class="info-group-title"><i class="info-led" style="--led:'+ledColor+'"></i><b>'+title+'</b></div>'+body+(notes&&notes.length?'<ul class="info-notes">'+notes.map(n=>'<li style="color:'+infoNoteColor(n)+'">'+n+'</li>').join("")+'</ul>':"")+'</div>';
 }
 function renderInfo(){
- const talentChunks=chunkRows(TALENT_LEVELS,3).map(rows=>infoTableMarkup(rows,["Ур.","Урон","Всего"])).join("");
+ const talentChunks=chunkRows(TALENT_LEVELS,3).map(rows=>infoTableMarkup(rows,["Уровень","Урон","Всего"])).join("");
  $("infoGroups").innerHTML=
-  infoGroupMarkup("Таланты","#ffb74d",'<div class="info-subcols">'+talentChunks+'</div>')+
-  infoGroupMarkup("Опыт ПДА","#9fdc9f",infoTableMarkup(PDA_LEVELS,["Ур.","Опыт","Всего"]),PDA_LEVEL_NOTES)+
-  infoGroupMarkup("Опыт персонажа","#6fcf97",infoTableMarkup(CHAR_LEVELS,["Ур.","Опыт","Всего"]));
+  infoGroupMarkup("Таланты","#ffb74d",'<div class="info-subcols">'+talentChunks+'</div>',null,"talents")+
+  infoGroupMarkup("Опыт ПДА","#9fdc9f",infoTableMarkup(PDA_LEVELS,["Уровень","Опыт","Всего"]),PDA_LEVEL_NOTES,"pda")+
+  infoGroupMarkup("Опыт персонажа","#54bfff",infoTableMarkup(CHAR_LEVELS,["Уровень","Опыт","Всего"]),null,"char");
 }
 
 /* Ссылка на билд: уровень, снаряжение и таланты в адресе после # */
