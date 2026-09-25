@@ -18,6 +18,11 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 .main-nav a.active{color:#dcecff}
 .main-nav a.active:after{content:"";position:absolute;bottom:15px;left:10px;right:10px;height:4px;border-radius:4px;background:#4aa8ff;box-shadow:0 0 8px #238cff}
 
+/* ===== Вкладки сайта =====
+   Каждый раздел (Калькулятор, Информация) — это .view; активен тот,
+   у которого нет атрибута hidden. Переключение — в app.js (switchView). */
+.view[hidden]{display:none}
+
 /* ===== Раскладка ===== */
 .page{display:grid;grid-template-columns:330px minmax(0,1fr);gap:4px;min-height:calc(100vh - 92px);padding:4px;align-items:start}
 .content{padding:15px 13px 20px 0;min-width:0}
@@ -106,7 +111,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 .delta.up{color:#27db88}
 .delta.down{color:#ff6b6f}
 
-/* Таблицы (расчёт по жетонам) */
+/* Таблицы (расчёт по жетонам, вкладка «Информация») */
 .data-wrap{overflow-x:auto}
 .data-table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
 .data-table th{color:#7c93a6;font-size:11px;font-weight:600;text-align:right;padding:5px 8px;border-bottom:1px solid #193246}
@@ -126,6 +131,20 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 .extra-grid>div>span{font-size:20px;line-height:1;color:#cddce8}
 .extra-grid small{color:#8196a9;font-size:12px;line-height:1.2}
 .extra-grid strong{font-size:20px;color:#edf5fc;font-variant-numeric:tabular-nums}
+
+/* ===== Вкладка «Информация» ===== */
+.info-content{max-width:1400px;margin:0 auto;padding:15px 20px 24px}
+.info-lead{margin:0 2px 14px;color:#8196a9;font-size:12px;line-height:1.5}
+.info-groups{display:grid;grid-template-columns:2.3fr 1fr 1fr;gap:16px;align-items:start}
+.info-group{border:1px solid #1a3346;border-radius:9px;background:linear-gradient(135deg,#0b1925,#09141e);padding:14px 16px 16px;box-shadow:inset 0 0 22px #0a223433;min-width:0}
+.info-group-title{display:flex;align-items:center;gap:9px;font-size:15px;color:#dce7f0;margin-bottom:11px}
+.info-led{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:var(--led,#54bfff);box-shadow:0 0 8px var(--led,#54bfff)}
+.info-subcols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.info-table td,.info-table th{padding:5px 7px;font-size:12px}
+.info-milestone td{background:rgba(240,174,88,.08);color:#f6d9ad;font-weight:700}
+.info-milestone td:first-child{color:#f0ae58}
+.info-notes{margin:12px 0 0;padding-left:18px;color:#8196a9;font-size:11px;line-height:1.6}
+.info-notes li{margin-bottom:2px}
 
 /* ===== Уведомление ===== */
 .toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-45%) scale(.96);min-width:320px;padding:26px 38px 28px;border:2px solid #566b76;border-radius:4px;background:linear-gradient(180deg,#18252a 0%,#0a1114 100%);color:#d9e1df;text-align:center;font-size:24px;font-weight:700;letter-spacing:1px;text-transform:uppercase;box-shadow:0 0 0 1px #080c0e,0 16px 55px #000c,inset 0 0 35px #0008;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:3000}
@@ -253,6 +272,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
   .main-nav{gap:0}
   .main-nav a{padding:0 9px}
   .page{grid-template-columns:300px 1fr}
+  .info-groups{grid-template-columns:1fr}
 }
 @media(max-width:850px){
   .talent-dialog{inset:0}
@@ -275,6 +295,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
   .damage-grid{grid-template-columns:1fr}
   .toast{min-width:0;width:calc(100% - 40px);padding:22px 24px 25px;font-size:20px}
   .toast::before{font-size:50px}
+  .info-content{padding:10px}
 }
 @media(max-width:650px){
   .talent-game-body{display:block;overflow:auto}
@@ -291,6 +312,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
   .data-table{font-size:12px}
   .data-table th,.data-table td{padding:6px 4px}
   .tokens-btn{font-size:11px;padding:0 9px}
+  .info-subcols{grid-template-columns:1fr}
 }
 @media(max-width:430px){
   .header-inner{padding:8px 10px;gap:8px}
