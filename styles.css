@@ -7,7 +7,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 /* ===== Шапка ===== */
 .site-header{height:99px;border-bottom:1px solid #172a39;background-image:url("assets/header.png");background-size:100% auto;background-position:center;background-repeat:no-repeat;background-color:#07111a;box-shadow:0 5px 24px #000b;position:relative;z-index:2}
 .header-inner{height:100%;display:flex;align-items:center;padding:0 28px;gap:50px}
-.logo{width:315px;display:flex;align-items:center;gap:12px}
+.logo{width:315px;display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
 .rad-logo{width:42px;height:50px;display:grid;place-items:center;font-size:38px;color:#eaf3fc;filter:drop-shadow(0 0 6px #5aaeff);line-height:1}
 @font-face{font-family:"Graffiti1C";src:url("assets/fonts/graffiti-stalker.woff") format("woff"),url("assets/fonts/graffiti-stalker.ttf") format("truetype");font-weight:normal;font-style:normal;font-display:swap}
 .logo-title{font-family:"Graffiti1C","Segoe UI",Arial,sans-serif;font-size:29px;font-weight:400;letter-spacing:.5px;line-height:1;color:#edf5ff;text-shadow:1px 1px 0 #04090e,0 0 12px rgba(90,174,255,.4)}
@@ -128,6 +128,18 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
 .extra-grid>div>span{font-size:20px;line-height:1;color:#cddce8}
 .extra-grid small{color:#8196a9;font-size:12px;line-height:1.2}
 .extra-grid strong{font-size:20px;color:#edf5fc;font-variant-numeric:tabular-nums}
+
+/* ===== Стартовая страница ===== */
+.home-content{max-width:1000px;margin:0 auto;padding:48px 20px 30px}
+.home-hero{text-align:center;margin-bottom:34px}
+.home-hero h1{margin:0 0 10px;font-size:34px;letter-spacing:-.6px;color:#e4eef8}
+.home-hero p{margin:0 auto;max-width:620px;color:#9fb1c0;font-size:14px;line-height:1.6}
+.home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.home-card{display:flex;flex-direction:column;gap:9px;padding:22px 20px;border:1px solid #1a3346;border-radius:9px;background:linear-gradient(135deg,#0b1925,#09141e);box-shadow:inset 0 0 22px #0a223433;color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}
+.home-card:hover{border-color:#2e6384;transform:translateY(-2px)}
+.home-card span{font-size:30px;line-height:1;color:#54bfff}
+.home-card b{font-size:16px;color:#dce7f0}
+.home-card small{color:#8196a9;font-size:12px;line-height:1.5}
 
 /* ===== Вкладка «Информация» ===== */
 .info-content{max-width:1400px;margin:0 auto;padding:15px 20px 24px}
@@ -291,6 +303,7 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
   .main-nav a{padding:0 9px}
   .page{grid-template-columns:300px 1fr}
   .info-groups{grid-template-columns:1fr}
+  .home-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:850px){
   .talent-dialog{inset:0}
@@ -314,6 +327,9 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
   .toast{min-width:0;width:calc(100% - 40px);padding:22px 24px 25px;font-size:20px}
   .toast::before{font-size:50px}
   .info-content{padding:10px}
+  .home-content{padding:30px 16px 20px}
+  .home-hero h1{font-size:26px}
+  .home-grid{grid-template-columns:1fr}
 }
 @media(max-width:650px){
   .talent-game-body{display:block;overflow:auto}
