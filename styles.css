@@ -1,11 +1,11 @@
 /* ===== Основа ===== */
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#060d13;color:#dce7f2;font-family:"Segoe UI",Arial,sans-serif;overflow-x:hidden}
-body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 35%),linear-gradient(180deg,#07111a 0,#061019 55%,#050b10 100%);font-size:14px}
+body{background-color:#060d13;background-image:linear-gradient(180deg,rgba(6,13,19,0) 0%,rgba(6,13,19,.42) 42%,rgba(6,13,19,.9) 64%,#060d13 80%),radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 35%),url("assets/bg-zone.jpg");background-position:0 0,0 0,center top;background-size:auto,auto,100% auto;background-repeat:no-repeat;font-size:14px}
 :where(button,input,a):focus-visible{outline:2px solid #54bfff;outline-offset:2px}
 
 /* ===== Шапка ===== */
-.site-header{height:99px;border-bottom:1px solid #172a39;background-image:url("assets/header.png");background-size:100% auto;background-position:center;background-repeat:no-repeat;background-color:#07111a;box-shadow:0 5px 24px #000b;position:relative;z-index:2}
+.site-header{height:99px;border-bottom:1px solid #172a39;background:linear-gradient(180deg,rgba(5,10,15,.22) 0%,rgba(5,10,15,.62) 100%);box-shadow:0 5px 24px #000b;position:relative;z-index:2}
 .header-inner{height:100%;display:flex;align-items:center;padding:0 28px;gap:50px}
 .logo{width:315px;display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
 .rad-logo{width:42px;height:50px;display:grid;place-items:center;font-size:38px;color:#eaf3fc;filter:drop-shadow(0 0 6px #5aaeff);line-height:1}
@@ -343,7 +343,7 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
 
 /* ===== Планшеты и телефоны ===== */
 @media(max-width:760px){
-  .site-header{height:auto;background-position:center top}
+  .site-header{height:auto}
   .header-inner{min-height:80px;flex-wrap:wrap;padding:10px 14px}
   .logo{width:auto}
   .main-nav{order:3;width:100%;height:44px;overflow:auto}
