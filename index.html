@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Сердце зоны</title>
-<meta name="description" content="Сайт-помощник для игры «Сердце зоны»: калькулятор урона, дерево талантов и справочная информация по уровням.">
+<meta name="description" content="Сайт-помощник для игры «Сердце зоны»: калькулятор урона и справочная информация по уровням.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Сердце зоны">
 <meta property="og:title" content="Сердце зоны — сайт-помощник">
-<meta property="og:description" content="Калькулятор урона, дерево талантов и справочные таблицы по уровням для игры «Сердце зоны».">
+<meta property="og:description" content="Калькулятор урона и справочные таблицы по уровням для игры «Сердце зоны».">
 <meta property="og:url" content="https://sof-oss.github.io/helper/">
 <meta property="og:image" content="https://sof-oss.github.io/helper/assets/preview.jpg">
 <meta property="og:image:width" content="1200">
@@ -23,14 +23,14 @@
   <div class="header-inner">
     <div class="logo"><div class="rad-logo">☢</div><div class="logo-copy"><div class="logo-title">Сердце зоны</div></div></div>
     <nav class="main-nav">
-      <a class="active" href="#" data-view="info"><span>📊</span>Информация</a>
-      <a href="#" data-view="calc"><span>⚔</span>Калькулятор урона</a>
+      <a href="#" data-view="info"><span>📊</span>Информация</a>
+      <a class="active" href="#" data-view="calc"><span>⚔</span>Калькулятор урона</a>
       <a class="guide-link" href="#"><span>📖</span>Гайды</a>
     </nav>
   </div>
 </header>
 
-<div class="view" id="viewInfo" data-view="info">
+<div class="view" id="viewInfo" data-view="info" hidden>
 <main class="content info-content">
 <div class="result-title"><span class="target-icon">📊</span><h1>Информация</h1></div>
 <section class="result-panel">
@@ -41,7 +41,7 @@
 </main>
 </div>
 
-<div class="view" id="viewCalc" data-view="calc" hidden>
+<div class="view" id="viewCalc" data-view="calc">
 <div class="page">
 <aside class="sidebar">
 <section class="side-section level-section"><div class="side-title"><span class="person-icon" aria-hidden="true"></span><b>Уровень персонажа</b></div><div class="level-row"><button type="button" data-step="level" data-dir="-1">−</button><input id="level" type="number" min="1" max="100" value="1"><button type="button" data-step="level" data-dir="1">+</button></div></section>

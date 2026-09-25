@@ -316,5 +316,5 @@ document.addEventListener("wheel",e=>{
 renderCards();loadState();loadTokens();
 const openedFromLink=applyHash();
 render();
-switchView(openedFromLink?"calc":(document.querySelector('.main-nav a.active')?.dataset.view||"info"));
+switchView(openedFromLink?"calc":(document.querySelector('.main-nav a.active')?.dataset.view||"calc"));
 if(openedFromLink)showToast("Открыт билд по ссылке");

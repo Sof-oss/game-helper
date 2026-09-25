@@ -146,12 +146,12 @@ body{background:radial-gradient(circle at 75% 0%,rgba(49,73,91,.32),transparent 
    ("Ур." / "Урон" / "Всего"), как в исходном экспортируемом изображении
    (html_progress-tables.html), где числа не сливались друг с другом. */
 .info-table{font-family:"Consolas","IBM Plex Mono",ui-monospace,monospace;table-layout:fixed}
-.info-table th{padding:6px 6px 8px;font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;border-bottom:1px solid #23475f}
+.info-table th{padding:6px 6px 8px;font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;border-bottom:1px solid #23475f;text-align:center}
 .info-table td{padding:5px 6px;font-size:12px;border-top:1px solid #12222f}
 .info-table tbody tr:nth-child(even):not(.info-milestone) td{background:rgba(159,220,159,.045)}
 .info-milestone td{background:rgba(255,183,77,.14);color:#ffdca8;font-weight:700;border-top-color:rgba(255,183,77,.3);border-bottom:1px solid rgba(255,183,77,.3)}
 .info-milestone td:first-child{color:#ffb74d}
-.info-notes{margin:12px 0 0;padding-left:18px;font-size:11.5px;line-height:1.7;list-style:disc}
+.info-notes{margin:12px 0 0;padding-left:0;font-size:11.5px;line-height:1.7;list-style:none;text-align:center}
 .info-notes li{margin-bottom:2px;font-weight:600}
 
 /* ===== Уведомление ===== */
