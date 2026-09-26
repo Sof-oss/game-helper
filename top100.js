@@ -6,16 +6,13 @@ const TOP100_TAB_KEY="gameHelperTop100Tab";
    данные и акцентный цвет (перекликается с блоками вкладки «Информация»:
    таланты — янтарный, экспедиции — зелёный, защита лагеря — синий). */
 const TOP100_TABS=[
+ {key:"talents",label:"Таланты",metric:"Таланты",data:()=>window.TOP100_TALENTS,accent:"#ffb74d"},
  {key:"defense",label:"Защита лагеря",metric:"Защита лагеря",data:()=>window.TOP100_DEFENSE,accent:"#54bfff"},
- {key:"expeditions",label:"Экспедиции",metric:"Экспедиции",data:()=>window.TOP100_EXPEDITIONS,accent:"#9fdc9f"},
- {key:"talents",label:"Таланты",metric:"Таланты",data:()=>window.TOP100_TALENTS,accent:"#ffb74d"}
+ {key:"expeditions",label:"Экспедиции",metric:"Экспедиции",data:()=>window.TOP100_EXPEDITIONS,accent:"#9fdc9f"}
 ];
 
-let currentTop100Tab="defense";
+let currentTop100Tab="talents";
 try{const saved=localStorage.getItem(TOP100_TAB_KEY);if(TOP100_TABS.some(t=>t.key===saved))currentTop100Tab=saved}catch{}
-
-/* Значок покинувшего отряд игрока (та же сломанная антенна, что и в подписи под таблицей) */
-const LEFT_ICON='<svg class="top100-left-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 3h6M9 21h6M6 3c0 4 3 5.5 3 9s-3 5-3 9M18 3c0 4-3 5.5-3 9s3 5 3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
 
 /* Значки 1–3 места вместо медалей — радиационный символ в цвете места,
    в духе логотипа сайта (☢), а не игровые иконки из исходных картинок. */
@@ -26,7 +23,7 @@ function rankCell(rank){
 
 function top100RowMarkup(row,rank){
  const[nick,level,value,inactive]=row;
- const nickHtml=(inactive?LEFT_ICON:"")+nick.replace(/</g,"&lt;");
+ const nickHtml=nick.replace(/</g,"&lt;");
  return '<tr class="'+(rank<=3?"top100-podium top100-podium-"+rank:"")+(inactive?" top100-inactive":"")+'"><td class="top100-rank">'+rankCell(rank)+'</td><td class="top100-nick">'+nickHtml+'</td><td>'+level+'</td><td class="top100-value">'+fmt(value)+'</td></tr>';
 }
 

@@ -200,6 +200,7 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
 /* ===== Вкладка «Топ-100» ===== */
 .top100-content{max-width:1180px;margin:0 auto;padding:15px 20px 24px;flex:1}
 .top100-panel{padding-bottom:16px}
+.top100-update-note{margin-top:-8px}
 .top100-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 14px}
 .top100-tab{height:38px;padding:0 16px;border:1px solid #1f3d54;border-radius:20px;background:#0a1a27;color:#93a8ba;font:inherit;font-size:12.5px;font-weight:700;letter-spacing:.2px;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
 .top100-tab:hover{background:#0e2334;color:#c3d4e2}
@@ -231,9 +232,7 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
    остальных «тревожных» значений на сайте (delta.down, crit-chip) */
 .top100-inactive td{color:#ff9498;font-style:italic}
 .top100-inactive .top100-rank-num{color:#ff9498}
-.top100-left-icon{width:13px;height:13px;flex:0 0 13px;color:#ff6b6f;vertical-align:-2px;margin-right:5px}
 .top100-footnote{display:flex;align-items:center;gap:6px}
-.top100-footnote .top100-left-icon{margin-right:0}
 
 /* ===== Уведомление ===== */
 .toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-45%) scale(.96);min-width:320px;padding:26px 38px 28px;border:2px solid #566b76;border-radius:4px;background:linear-gradient(180deg,#18252a 0%,#0a1114 100%);color:#d9e1df;text-align:center;font-size:24px;font-weight:700;letter-spacing:1px;text-transform:uppercase;box-shadow:0 0 0 1px #080c0e,0 16px 55px #000c,inset 0 0 35px #0008;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:3000}
@@ -366,11 +365,11 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
 /* ===== Подпись автора =====
    Тот же рукописный шрифт (Caveat) и лёгкий наклон, что и в исходном
    экспортируемом изображении (html_progress-tables.html, ctx.font =
-   "12px 'Caveat', cursive"), только перекрашено под акцентный синий
-   сайта вместо зелёного — чтобы подпись не выглядела чужеродной вставкой
-   среди остальной палитры интерфейса. */
+   "12px 'Caveat', cursive"), перекрашено под голубой акцент сайта
+   (тот же оттенок, что у логотипа и активных пунктов навигации), чтобы
+   подпись не выглядела чужеродной вставкой среди остальной палитры. */
 .site-footer{padding:8px 0 12px;text-align:center;flex:0 0 auto}
-.site-footer span{display:inline-block;font-family:"Caveat","Segoe UI",cursive;font-size:12px;font-weight:400;line-height:1;color:#789078;transform:skewX(-8deg);text-shadow:none;opacity:.55}
+.site-footer span{display:inline-block;font-family:"Caveat","Segoe UI",cursive;font-size:12px;font-weight:400;line-height:1;color:#5aaeff;transform:skewX(-8deg);text-shadow:none;opacity:.55}
 
 /* ===== Средние экраны ===== */
 @media(max-width:1050px){
