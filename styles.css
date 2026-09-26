@@ -25,6 +25,13 @@ body{background-color:#060d13;background-image:linear-gradient(180deg,rgba(6,13,
 .main-nav a.active{color:#dcecff}
 .main-nav a.active:after{content:"";position:absolute;bottom:15px;left:10px;right:10px;height:4px;border-radius:4px;background:#4aa8ff;box-shadow:0 0 8px #238cff}
 
+/* Рекламный баннер в шапке: ссылка-картинка, прижатая к правому краю за счёт
+   margin-left:auto — остаётся последним элементом в потоке header-inner,
+   поэтому не требует отдельной обёртки или изменения flex-раскладки шапки. */
+.header-promo{margin-left:auto;flex:0 0 auto;display:block;height:64px;line-height:0;border:1px solid #2d5578;border-radius:8px;overflow:hidden;box-shadow:0 0 14px rgba(84,191,255,.22);transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+.header-promo:hover{transform:translateY(-1px);box-shadow:0 0 20px rgba(84,191,255,.4);border-color:#4aa8ff}
+.header-promo img{display:block;height:100%;width:auto}
+
 /* ===== Вкладки сайта =====
    Каждый раздел (Калькулятор, Информация) — это .view; активен тот,
    у которого нет атрибута hidden. Переключение — в app.js (switchView). */
@@ -381,6 +388,7 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
   .header-inner{gap:15px}
   .main-nav{gap:0}
   .main-nav a{padding:0 9px}
+  .header-promo{height:56px}
   .page{grid-template-columns:300px 1fr}
   .info-groups{grid-template-columns:1fr}
   .home-grid{grid-template-columns:1fr 1fr}
@@ -400,6 +408,9 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
   .main-nav{order:3;width:100%;height:44px;overflow:auto}
   .main-nav a{font-size:12px}
   .main-nav a.active:after{bottom:5px;height:3px}
+  /* На узкой шапке баннер держим на первой строке рядом с логотипом,
+     а меню переносится на вторую строку целиком (order:3 выше) */
+  .header-promo{order:2;height:44px}
   .page{display:block}
   .sidebar{margin-bottom:8px}
   .content{padding:8px}
@@ -442,6 +453,7 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
   .logo-title{font-size:19px;letter-spacing:.3px}
   .main-nav a{padding:0 8px;font-size:11px;gap:6px}
   .main-nav a .nav-icon{width:17px;height:17px;flex:0 0 17px}
+  .header-promo{height:34px}
   .result-title{padding:4px 8px 10px;gap:8px}
   .result-title h1{font-size:21px}
   .target-icon{font-size:27px}
