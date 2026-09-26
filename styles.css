@@ -25,12 +25,25 @@ body{background-color:#060d13;background-image:linear-gradient(180deg,rgba(6,13,
 .main-nav a.active{color:#dcecff}
 .main-nav a.active:after{content:"";position:absolute;bottom:15px;left:10px;right:10px;height:4px;border-radius:4px;background:#4aa8ff;box-shadow:0 0 8px #238cff}
 
-/* Рекламный баннер в шапке: ссылка-картинка, прижатая к правому краю за счёт
-   margin-left:auto — остаётся последним элементом в потоке header-inner,
-   поэтому не требует отдельной обёртки или изменения flex-раскладки шапки. */
-.header-promo{margin-left:auto;flex:0 0 auto;display:block;height:84px;line-height:0;border:1px solid #2d5578;border-radius:8px;overflow:hidden;box-shadow:0 0 14px rgba(84,191,255,.22);transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+/* Рекламный баннер в шапке. Раньше это была просто картинка (assets/promo-banner.jpg)
+   с текстом, впечённым в растр, — при сжатии в JPEG и уменьшении под высоту
+   шапки текст на ней превращался в кашу. Теперь текст живой (реальные <span>),
+   поэтому он чёткий на любом экране и масштабе, а фон и обводку рисует CSS
+   в духе остальных плашек сайта (ср. .side-btn, .tokens-btn). margin-left:auto
+   по-прежнему держит баннер прижатым к правому краю шапки, отдельная обёртка
+   для этого не нужна. */
+.header-promo{margin-left:auto;flex:0 0 auto;position:relative;display:flex;align-items:center;gap:14px;height:84px;padding:0 20px;border:1px solid #2d5578;border-radius:8px;background:linear-gradient(135deg,#13314a,#0a1a27);overflow:hidden;text-decoration:none;box-shadow:0 0 14px rgba(84,191,255,.22);transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
 .header-promo:hover{transform:translateY(-1px);box-shadow:0 0 20px rgba(84,191,255,.4);border-color:#4aa8ff}
-.header-promo img{display:block;height:100%;width:auto}
+.header-promo:hover .header-promo-glow{opacity:1}
+/* Мягкое радиальное свечение поверх подложки — тот же приём, что и glow у
+   логотипа/иконок сайта, только выключен по умолчанию и включается на hover,
+   чтобы в состоянии покоя текст читался на ровном фоне без бликов под ним. */
+.header-promo-glow{position:absolute;inset:-60% -10%;background:radial-gradient(circle,rgba(84,191,255,.22),transparent 65%);opacity:0;transition:opacity .15s ease;pointer-events:none}
+.header-promo-copy{position:relative;display:flex;flex-direction:column;gap:3px;white-space:nowrap}
+.header-promo-copy b{font-size:14px;font-weight:700;color:#f2f8ff;letter-spacing:.2px}
+.header-promo-copy small{font-size:11px;color:#8fc6ff;letter-spacing:.2px}
+.header-promo-cta{position:relative;display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;padding:9px 16px;border-radius:20px;background:linear-gradient(180deg,#2196f3,#0d5aa7);color:#f2f9ff;font-size:13px;font-weight:700;letter-spacing:.2px;white-space:nowrap;box-shadow:0 0 10px rgba(84,191,255,.35),inset 0 1px 0 rgba(255,255,255,.18)}
+.header-promo-arrow{width:13px;height:13px;flex:0 0 13px}
 
 /* ===== Вкладки сайта =====
    Каждый раздел (Калькулятор, Информация) — это .view; активен тот,
@@ -388,7 +401,8 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
   .header-inner{gap:15px}
   .main-nav{gap:0}
   .main-nav a{padding:0 9px}
-  .header-promo{height:72px}
+  .header-promo{height:72px;padding:0 16px;gap:10px}
+  .header-promo-cta{padding:8px 13px}
   .page{grid-template-columns:300px 1fr}
   .info-groups{grid-template-columns:1fr}
   .home-grid{grid-template-columns:1fr 1fr}
@@ -409,8 +423,12 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
   .main-nav a{font-size:12px}
   .main-nav a.active:after{bottom:5px;height:3px}
   /* На узкой шапке баннер держим на первой строке рядом с логотипом,
-     а меню переносится на вторую строку целиком (order:3 выше) */
-  .header-promo{order:2;height:56px}
+     а меню переносится на вторую строку целиком (order:3 выше). Подзаголовок
+     («Регистрация в игре») на такой ширине убираем — на первый план выходит
+     заголовок и кнопка, этого достаточно, чтобы баннер оставался читаемым. */
+  .header-promo{order:2;height:56px;padding:0 12px;gap:8px}
+  .header-promo-copy small{display:none}
+  .header-promo-cta{padding:6px 11px;font-size:12px}
   .page{display:block}
   .sidebar{margin-bottom:8px}
   .content{padding:8px}
@@ -453,7 +471,10 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
   .logo-title{font-size:19px;letter-spacing:.3px}
   .main-nav a{padding:0 8px;font-size:11px;gap:6px}
   .main-nav a .nav-icon{width:17px;height:17px;flex:0 0 17px}
-  .header-promo{height:44px}
+  .header-promo{height:44px;padding:0 10px;gap:6px;border-radius:6px}
+  .header-promo-copy b{font-size:11px}
+  .header-promo-cta{padding:5px 9px;font-size:11px;gap:4px}
+  .header-promo-arrow{width:11px;height:11px;flex:0 0 11px}
   .result-title{padding:4px 8px 10px;gap:8px}
   .result-title h1{font-size:21px}
   .target-icon{font-size:27px}
