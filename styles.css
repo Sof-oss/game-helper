@@ -140,12 +140,11 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
    заголовком и статы, чтобы страница не выглядела заглушкой. */
 .home-content{max-width:1040px;margin:0 auto;padding:56px 20px 44px;flex:1}
 .home-hero{position:relative;text-align:center;margin-bottom:42px;padding:8px 0 4px;isolation:isolate}
-.home-hero::before{content:"☢";position:absolute;top:-52px;left:50%;transform:translateX(-50%);font-size:230px;line-height:1;color:#123047;opacity:.22;pointer-events:none;z-index:-1}
 .home-eyebrow{position:relative;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid #24506e;border-radius:20px;background:rgba(15,34,51,.65);color:#6fc3ff;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;margin-bottom:20px}
 .home-eyebrow i{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:#54bfff;box-shadow:0 0 8px #54bfff;animation:radarPulse 1.8s ease-in-out infinite}
 @keyframes radarPulse{0%,100%{opacity:.35;transform:scale(.75)}50%{opacity:1;transform:scale(1.2)}}
 .home-hero h1{margin:0 0 14px;font-family:"Graffiti1C","Segoe UI",Arial,sans-serif;font-weight:400;font-size:42px;letter-spacing:-.6px;color:#e4eef8;text-shadow:0 0 22px rgba(90,174,255,.25)}
-.home-hero p{margin:0 auto;max-width:620px;color:#9fb1c0;font-size:14px;line-height:1.65}
+.home-hero p{margin:0 auto;max-width:620px;color:#c3d1dd;font-size:14px;line-height:1.65;text-shadow:0 2px 10px rgba(0,0,0,.85),0 1px 3px rgba(0,0,0,.9)}
 .home-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 /* Акцентный цвет карточки задаётся инлайново (--accent/--accent-bg/--accent-border),
    чтобы не плодить по три модификатора класса на каждую карточку */
@@ -410,7 +409,6 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
   .top100-table th,.top100-table td{padding:6px 6px}
   .home-content{padding:32px 16px 24px}
   .home-hero{margin-bottom:30px}
-  .home-hero::before{font-size:140px;top:-30px}
   .home-eyebrow{font-size:10px;padding:5px 11px}
   .home-hero h1{font-size:26px}
   .home-card-body{padding:18px 16px 16px}
@@ -469,7 +467,6 @@ svg.target-icon{width:39px;height:39px;flex:0 0 39px}
   .talent-branch-tabs button{height:34px;font-size:12px;padding:0 10px}
   .talent-branch-description{padding:8px 2px 10px}
   .talent-branch-description b{font-size:14px}
-  .home-hero::before{font-size:110px;top:-20px}
   .home-hero h1{font-size:23px}
   .top100-table th:nth-child(4),.top100-table td:nth-child(4){width:96px}
   .top100-nick{font-size:11.5px}
